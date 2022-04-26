@@ -6,6 +6,7 @@ import connectDB from './config/mongoose.js'
 import ErrorMiddleware from './middleware/error.middleware.js'
 
 import userRoutes from './routes/user.route.js'
+import grammarRoutes from './routes/grammar.route.js'
 
 dotenv.config()
 
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/users', userRoutes)
+app.use('/api/grammar', grammarRoutes)
 
 app.use(ErrorMiddleware.notFoundUrl)
 
