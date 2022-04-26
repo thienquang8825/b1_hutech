@@ -1,25 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 
 const HomeScreen = () => {
-  const [data1, setData] = useState([])
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get('/api/users')
-      setData(data)
-    }
-    fetchData()
-  }, [])
-
-  return (
-    <div>
-      {data1.map((d, index) => (
-        <div key={index}>
-          {d.name} - {d.email}
-        </div>
-      ))}
-    </div>
-  )
+  return <h1>Home Page</h1>
 }
 
 export default HomeScreen
