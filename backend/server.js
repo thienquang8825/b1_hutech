@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
 import connectDB from './config/mongoose.js'
-import ErrorMiddleware from './middleware/error.middleware.js'
+import { ErrorMiddleware } from './middleware/error.middleware.js'
 
 import userRoutes from './routes/user.route.js'
 import grammarRoutes from './routes/grammar.route.js'

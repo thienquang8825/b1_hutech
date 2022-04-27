@@ -1,8 +1,19 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { UserAction } from '../actions/user.action'
 
 const Header = () => {
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userSignIn } = userLogin
+
+  const logoutHandler = () => {
+    dispatch(UserAction.logout())
+  }
+
   return (
     <Navbar bg='primary' variant='dark' expand='lg'>
       <Container>
@@ -44,11 +55,32 @@ const Header = () => {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+
           <Nav className='ms-auto'>
-            <Nav.Link href='#login'>
-              <i className='fa fa-user'></i> Login
-            </Nav.Link>
-            <Nav.Link href='#register'>Register</Nav.Link>
+            {userSignIn ? (
+              <NavDropdown title={userSignIn.name}>
+                <LinkContainer to='/profile'>
+                  <NavDropdown.Item>Profile</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <>
+                <LinkContainer to='/login'>
+                  <Nav.Link>
+                    <i className='fa fa-sign-in'></i> Login
+                  </Nav.Link>
+                </LinkContainer>
+
+                <LinkContainer to='/register'>
+                  <Nav.Link>
+                    <i className='fa fa-user-plus'></i> Register
+                  </Nav.Link>
+                </LinkContainer>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

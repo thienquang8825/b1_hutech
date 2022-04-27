@@ -129,10 +129,10 @@ const GrammarScreen = () => {
                   ? `/grammar/page/${page}`
                   : `/grammar/page/${page - 1}`
               }
-              className='col-md-2 col-sm-4 ms-3'
+              className='col-sm-2 col-md-1 ms-5'
             >
               <button className='btn btn-primary w-100' disabled={page === 1}>
-                <i className='fa fa-arrow-left'></i> Previous
+                <i className='fa fa-arrow-left'></i>
               </button>
             </Link>
             <Link
@@ -141,13 +141,13 @@ const GrammarScreen = () => {
                   ? `/grammar/page/${page}`
                   : `/grammar/page/${page + 1}`
               }
-              className='col-md-2 col-sm-4 me-3'
+              className='col-sm-2 col-md-1 me-5'
             >
               <button
                 className='btn btn-primary w-100'
                 disabled={page === pages}
               >
-                Next <i className='fa fa-arrow-right'></i>
+                <i className='fa fa-arrow-right'></i>
               </button>
             </Link>
           </div>
