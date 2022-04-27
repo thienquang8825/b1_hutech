@@ -5,7 +5,6 @@ import User from './models/user.model.js'
 import grammar from './data/grammar.js'
 import Grammar from './models/grammar.model.js'
 import connectDB from './config/mongoose.js'
-// import structure from './data/structure.js'
 
 dotenv.config()
 

@@ -15,6 +15,4 @@ const errorHandle = (err, req, res, next) => {
   })
 }
 
-const ErrorMiddleware = { notFoundUrl, errorHandle }
-
-export default ErrorMiddleware
+export const ErrorMiddleware = { notFoundUrl, errorHandle }
