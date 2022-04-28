@@ -1,26 +1,44 @@
-import React, { useState } from 'react'
+import React from 'react'
+import checkResult from '../utils/checkResult'
 
-const Quiz = ({ question }) => {
-  const [checkA, setCheckA] = useState(0)
-
+const Quiz = ({ question, show, number }) => {
   return (
-    <>
-      <p>{question.question}</p>
+    <div key={question._id} className='row mb-3'>
+      <div>
+        {number} - {question.question}
+      </div>
       {question.answers.map((answer) => (
-        <label className='text-scuccess' key={answer._id}>
+        <div
+          className='form-check ps-5 col-md-3 col-sm-6 my-2'
+          key={answer._id}
+        >
           <input
+            className='form-check-input'
             type='radio'
             name={question._id}
             id={answer._id}
-            value={answer.answer}
-            // defaultChecked={checkA === 0 ? false : true}
-            onChange={(e) => (answer.isCorrect ? setCheckA(1) : setCheckA(2))}
-          ></input>
-          {answer.answer} {checkA === 1 && <i className='fas fa-check'></i>}{' '}
-          {checkA === 2 && <i className='fas fa-times'></i>}
-        </label>
+            defaultChecked={show && answer.isCorrect === true}
+            disabled={show && !answer.isCorrect}
+            onChange={(e) => checkResult(answer)}
+          />
+
+          <label
+            className={`form-check-label ${
+              show && answer.isCorrect && 'text-success'
+            }`}
+            htmlFor={answer._id}
+          >
+            {answer.answer}
+            {show && answer.isCorrect && (
+              <>
+                {' '}
+                <i className='fas fa-check'></i>
+              </>
+            )}
+          </label>
+        </div>
       ))}
-    </>
+    </div>
   )
 }
 
