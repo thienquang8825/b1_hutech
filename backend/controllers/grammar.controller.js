@@ -5,7 +5,7 @@ import asyncHandler from 'express-async-handler'
 // @route   GET /api/grammar
 // @access  Public
 const getGrammar = asyncHandler(async (req, res) => {
-  const pageSize = 5
+  const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
   const count = await Grammar.count({})
