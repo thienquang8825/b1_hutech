@@ -80,13 +80,17 @@ const Header = () => {
                     <i className='fa fa-sign-in'></i> Login
                   </Nav.Link>
                 </LinkContainer>
-
                 <LinkContainer to='/register'>
                   <Nav.Link>
                     <i className='fa fa-user-plus'></i> Register
                   </Nav.Link>
                 </LinkContainer>
               </>
+            )}
+            {userSignIn && userSignIn.isAdmin && (
+              <LinkContainer to='/admin'>
+                <Nav.Link>Admin</Nav.Link>
+              </LinkContainer>
             )}
           </Nav>
         </Navbar.Collapse>

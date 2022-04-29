@@ -7,6 +7,8 @@ import { UserReducer } from './reducers/user.reducer'
 
 const reducer = combineReducers({
   questionGetList: QuestionReducer.getList,
+  questionGetDetail: QuestionReducer.getDetail,
+  questionUpdate: QuestionReducer.update,
 
   userLogin: UserReducer.login,
   userRegister: UserReducer.register,
@@ -17,7 +19,7 @@ const userLoginFromStorage = localStorage.getItem('userLogin')
   : null
 
 const initialState = {
-  userLogin: { user: userLoginFromStorage },
+  userLogin: { userSignIn: userLoginFromStorage },
 }
 
 const middleware = [thunk]

@@ -21,7 +21,7 @@ const GrammarScreen = () => {
   let count = pageSize * (page - 1)
 
   useEffect(() => {
-    dispatch(QuestionAction.getListGrammar(pageNumber))
+    dispatch(QuestionAction.getList(pageNumber))
   }, [dispatch, pageNumber])
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const GrammarScreen = () => {
     <>
       <h1 className='text-center m-3'>Vocabulary & Grammar</h1>
       <div className='row mt-3'>
-        <div className='col-md-3'>
+        <div className='col-md-3 border'>
           <Aside
             show={show}
             setClear={setClear}

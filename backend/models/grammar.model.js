@@ -18,6 +18,6 @@ const grammarSchema = mongoose.Schema(
   }
 )
 
-const Grammar = mongoose.model('Grammar', grammarSchema)
+const Grammar = mongoose.model('VocabularyGrammar', grammarSchema)
 
 export default Grammar

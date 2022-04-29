@@ -11,7 +11,7 @@ const Aside = ({
   pageSize,
 }) => {
   return (
-    <div className='row justify-content-evenly border fixed'>
+    <div className='row justify-content-evenly'>
       <h5 className='mt-3 text-center'>Functions</h5>
       <button
         className='btn btn-primary col-sm-5 my-2'

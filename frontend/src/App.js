@@ -7,6 +7,8 @@ import HomeScreen from './screens/HomeScreen'
 import GrammarScreen from './screens/GrammarScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/Register'
+import GrammarListScreen from './screens/GrammarListScreen'
+import GrammarEditScreen from './screens/GrammarEditScreen'
 
 const App = () => {
   return (
@@ -23,6 +25,12 @@ const App = () => {
             />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
+            <Route path='/admin' element={<GrammarListScreen />} exact />
+            <Route
+              path='/admin/grammar/page/:pageNumber'
+              element={<GrammarListScreen />}
+            />
+            <Route path='/admin/grammar/:id' element={<GrammarEditScreen />} />
           </Routes>
         </Container>
       </main>
