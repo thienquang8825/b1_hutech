@@ -1,10 +1,12 @@
 import dotenv from 'dotenv'
 import colors from 'colors'
+import connectDB from './config/mongoose.js'
 import users from './data/users.js'
 import User from './models/user.model.js'
 import grammar from './data/grammar.js'
 import Grammar from './models/grammar.model.js'
-import connectDB from './config/mongoose.js'
+import reading from './data/reading.js'
+import Reading from './models/reading.model.js'
 
 dotenv.config()
 
@@ -14,10 +16,11 @@ const importData = async () => {
   try {
     await User.deleteMany()
     await Grammar.deleteMany()
+    await Reading.deleteMany()
 
     await User.insertMany(users)
     await Grammar.insertMany(grammar)
-    // await Structure.insertMany(structure)
+    await Reading.insertMany(reading)
 
     console.log('Data imported!!!'.green.inverse)
     process.exit()

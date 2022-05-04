@@ -21,34 +21,54 @@ const GrammarListScreen = () => {
   const questionGetDetail = useSelector((state) => state.questionGetDetail)
   const {
     question: questionDetail,
-    loading: loadingGetDetail,
+    // loading: loadingGetDetail,
     error: errorGetDetail,
   } = questionGetDetail
 
   const questionUpdate = useSelector((state) => state.questionUpdate)
   const {
-    loading: loadingUpdate,
+    // loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
   } = questionUpdate
+
+  const questionCreate = useSelector((state) => state.questionCreate)
+  const {
+    // loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+  } = questionCreate
 
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: QUESTION_CONSTANT.UPDATE_RESET })
       window.alert('Question updated')
-      navigate('/admin')
+      navigate('/admin/grammar')
+    } else if (successCreate) {
+      dispatch({ type: QUESTION_CONSTANT.CREATE_RESET })
+      window.alert('Question created')
+      navigate('/admin/grammar')
     } else {
-      if (!questionDetail || questionDetail._id !== questionId) {
-        dispatch(QuestionAction.getDetail(questionId))
-      } else {
-        setQuestion(questionDetail.question)
-        setAnswerA(questionDetail.answers[0])
-        setAnswerB(questionDetail.answers[1])
-        setAnswerC(questionDetail.answers[2])
-        setAnswerD(questionDetail.answers[3])
+      if (questionId !== undefined) {
+        if (!questionDetail || questionDetail._id !== questionId) {
+          dispatch(QuestionAction.getDetail(questionId))
+        } else {
+          setQuestion(questionDetail.question)
+          setAnswerA(questionDetail.answers[0])
+          setAnswerB(questionDetail.answers[1])
+          setAnswerC(questionDetail.answers[2])
+          setAnswerD(questionDetail.answers[3])
+        }
       }
     }
-  }, [dispatch, navigate, questionDetail, questionId, successUpdate])
+  }, [
+    dispatch,
+    navigate,
+    questionDetail,
+    questionId,
+    successUpdate,
+    successCreate,
+  ])
 
   const clearCorrect = () => {
     setAnswerA({ ...answerA, isCorrect: false })
@@ -59,13 +79,23 @@ const GrammarListScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(
-      QuestionAction.update({
-        _id: questionId,
-        question,
-        answers: [answerA, answerB, answerC, answerD],
-      })
-    )
+
+    if (questionId !== undefined) {
+      dispatch(
+        QuestionAction.updateQuestion({
+          _id: questionId,
+          question,
+          answers: [answerA, answerB, answerC, answerD],
+        })
+      )
+    } else {
+      dispatch(
+        QuestionAction.createQuestion({
+          question,
+          answers: [answerA, answerB, answerC, answerD],
+        })
+      )
+    }
   }
 
   return (
@@ -76,6 +106,7 @@ const GrammarListScreen = () => {
         </div>
         <div className='col-md-9 border'>
           {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+          {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
           {errorGetDetail ? (
             <Message variant='danger'>{errorGetDetail}</Message>
           ) : (
@@ -87,6 +118,7 @@ const GrammarListScreen = () => {
                   placeholder='Enter question...'
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
+                  required
                 />
               </div>
               <div className='form-group my-3'>
@@ -94,14 +126,15 @@ const GrammarListScreen = () => {
                   <div className='col-1 text-center'>
                     <input
                       type='radio'
-                      id={answerA._id}
-                      name={questionDetail._id}
+                      id={answerA._id || 'A'}
+                      name={questionDetail._id || 'new'}
                       defaultChecked={answerA.isCorrect}
                       className='form-check-input'
                       onChange={(e) => {
                         clearCorrect()
                         setAnswerA({ ...answerA, isCorrect: e.target.checked })
                       }}
+                      required
                     ></input>
                   </div>
                   <div className='col'>
@@ -113,6 +146,7 @@ const GrammarListScreen = () => {
                       onChange={(e) =>
                         setAnswerA({ ...answerA, answer: e.target.value })
                       }
+                      required
                     />
                   </div>
                 </div>
@@ -122,8 +156,8 @@ const GrammarListScreen = () => {
                   <div className='col-1 text-center'>
                     <input
                       type='radio'
-                      id={answerB._id}
-                      name={questionDetail._id}
+                      id={answerB._id || 'B'}
+                      name={questionDetail._id || 'new'}
                       defaultChecked={answerB.isCorrect}
                       className='form-check-input'
                       onChange={(e) => {
@@ -141,6 +175,7 @@ const GrammarListScreen = () => {
                       onChange={(e) =>
                         setAnswerB({ ...answerB, answer: e.target.value })
                       }
+                      required
                     />
                   </div>
                 </div>
@@ -150,8 +185,8 @@ const GrammarListScreen = () => {
                   <div className='col-1 text-center'>
                     <input
                       type='radio'
-                      id={answerC._id}
-                      name={questionDetail._id}
+                      id={answerC._id || 'C'}
+                      name={questionDetail._id || 'new'}
                       defaultChecked={answerC.isCorrect}
                       className='form-check-input'
                       onChange={(e) => {
@@ -169,6 +204,7 @@ const GrammarListScreen = () => {
                       onChange={(e) =>
                         setAnswerC({ ...answerC, answer: e.target.value })
                       }
+                      required
                     />
                   </div>
                 </div>
@@ -178,8 +214,8 @@ const GrammarListScreen = () => {
                   <div className='col-1 text-center'>
                     <input
                       type='radio'
-                      id={answerD._id}
-                      name={questionDetail._id}
+                      id={answerD._id || 'D'}
+                      name={questionDetail._id || 'new'}
                       defaultChecked={answerD.isCorrect}
                       className='form-check-input'
                       onChange={(e) => {
@@ -197,14 +233,14 @@ const GrammarListScreen = () => {
                       onChange={(e) =>
                         setAnswerD({ ...answerD, answer: e.target.value })
                       }
+                      required
                     />
                   </div>
                 </div>
               </div>
-
               <div className='form-group my-3 text-center'>
-                <button className='btn btn-primary py-2 px-4' type='submit'>
-                  Update
+                <button type='submit' className='btn btn-primary py-2 px-4'>
+                  {questionId !== undefined ? 'Update' : 'Create'}
                 </button>
               </div>
             </form>

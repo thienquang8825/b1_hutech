@@ -9,10 +9,11 @@ const Aside = ({
   pages,
   quantity,
   pageSize,
+  type,
 }) => {
   return (
     <div className='row justify-content-evenly'>
-      <h5 className='mt-3 text-center'>Functions</h5>
+      <h5 className='mt-3 text-center'>Function</h5>
       <button
         className='btn btn-primary col-sm-5 my-2'
         type='button'
@@ -32,10 +33,11 @@ const Aside = ({
         Clear
       </button>
       <hr></hr>
-      <h5 className='text-center'>List Questions</h5>
+      <h5 className='text-center'>List</h5>
+
       {[...Array(pages).keys()].map((x) => (
         <Link
-          to={`/grammar/page/${x + 1}`}
+          to={`/${type}/page/${x + 1}`}
           key={x + 1}
           className='col-sm-5 my-2 px-0'
         >
@@ -45,8 +47,14 @@ const Aside = ({
             }`}
             type='button'
           >
-            {x * pageSize + 1} -{' '}
-            {(x + 1) * pageSize > quantity ? quantity : (x + 1) * pageSize}
+            {type === 'grammar' ? (
+              <>
+                {x * pageSize + 1} -{' '}
+                {(x + 1) * pageSize > quantity ? quantity : (x + 1) * pageSize}
+              </>
+            ) : (
+              <>Text {x + 1}</>
+            )}
           </button>
         </Link>
       ))}

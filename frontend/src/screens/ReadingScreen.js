@@ -6,7 +6,7 @@ import Quiz from '../components/Quiz'
 import Navigate from '../components/Navigate'
 import Aside from '../components/Aside'
 
-const GrammarScreen = () => {
+const ReadingScreen = () => {
   const { pageNumber } = useParams()
 
   const [clear, setClear] = useState(false)
@@ -14,14 +14,13 @@ const GrammarScreen = () => {
 
   const dispatch = useDispatch()
 
-  const questionGetList = useSelector((state) => state.questionGetList)
-  const { questions, page, pages, quantity } = questionGetList
+  const questionGetOne = useSelector((state) => state.questionGetOne)
+  const { question: reading, page, pages } = questionGetOne
 
-  const pageSize = 10
-  let count = pageSize * (page - 1)
+  let count = 0
 
   useEffect(() => {
-    dispatch(QuestionAction.getList('', pageNumber))
+    dispatch(QuestionAction.getOne(pageNumber))
   }, [dispatch, pageNumber])
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const GrammarScreen = () => {
 
   return (
     <>
-      <h1 className='text-center m-3'>Vocabulary & Grammar</h1>
+      <h1 className='text-center m-3'>Reading Comprehension</h1>
       <div className='row mt-3'>
         <div className='col-md-3 border'>
           <Aside
@@ -41,23 +40,27 @@ const GrammarScreen = () => {
             setShow={setShow}
             page={page}
             pages={pages}
-            quantity={quantity}
-            pageSize={pageSize}
-            type='grammar'
+            type='reading'
           />
         </div>
         {clear === false && (
           <div className='col-md-9 border'>
-            {questions.map((question) => (
-              <Quiz
-                key={question._id}
-                question={question}
-                show={show}
-                number={(++count).toString()}
-                type='grammar'
-              />
-            ))}
-            <Navigate page={page} pages={pages} type='grammar' />
+            <p>
+              <strong>
+                {reading.title}: {reading.require}
+              </strong>
+            </p>
+            <p>{reading.paragrap}</p>
+            {reading.questions &&
+              reading.questions.map((question) => (
+                <Quiz
+                  key={question._id}
+                  question={question}
+                  show={show}
+                  number={(++count).toString()}
+                />
+              ))}
+            <Navigate page={page} pages={pages} type='reading' />
           </div>
         )}
       </div>
@@ -65,4 +68,4 @@ const GrammarScreen = () => {
   )
 }
 
-export default GrammarScreen
+export default ReadingScreen

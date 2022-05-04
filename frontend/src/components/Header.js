@@ -32,9 +32,10 @@ const Header = () => {
                 <NavDropdown.Item>Vocabulary & Grammar</NavDropdown.Item>
               </LinkContainer>
               <NavDropdown.Item href='#action/3.2'>Signs</NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.3'>
-                Reading Comprehension
-              </NavDropdown.Item>
+              <LinkContainer to='/reading'>
+                <NavDropdown.Item>Reading Comprehension</NavDropdown.Item>
+              </LinkContainer>
+
               <NavDropdown.Item href='#action/3.4'>Cloze text</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title='Writing' id='basic-nav-dropdown'>
@@ -88,7 +89,7 @@ const Header = () => {
               </>
             )}
             {userSignIn && userSignIn.isAdmin && (
-              <LinkContainer to='/admin'>
+              <LinkContainer to='/admin/grammar'>
                 <Nav.Link>Admin</Nav.Link>
               </LinkContainer>
             )}

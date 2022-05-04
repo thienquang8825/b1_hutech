@@ -19,6 +19,24 @@ const getList = (state = { questions: [] }, action) => {
   }
 }
 
+const getOne = (state = { question: {} }, action) => {
+  switch (action.type) {
+    case CONSTANT.GET_ONE_REQUEST:
+      return { ...state, loading: true }
+    case CONSTANT.GET_ONE_SUCCESS:
+      return {
+        loading: false,
+        question: action.payload.question[0],
+        page: action.payload.page,
+        pages: action.payload.pages,
+      }
+    case CONSTANT.GET_ONE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
 const getDetail = (state = { question: {} }, action) => {
   switch (action.type) {
     case CONSTANT.GET_DETAIL_REQUEST:
@@ -32,7 +50,7 @@ const getDetail = (state = { question: {} }, action) => {
   }
 }
 
-const update = (state = { question: {} }, action) => {
+const updateQuestion = (state = { question: {} }, action) => {
   switch (action.type) {
     case CONSTANT.UPDATE_REQUEST:
       return { loading: true }
@@ -47,8 +65,39 @@ const update = (state = { question: {} }, action) => {
   }
 }
 
+const createQuestion = (state = {}, action) => {
+  switch (action.type) {
+    case CONSTANT.CREATE_REQUEST:
+      return { loading: true }
+    case CONSTANT.CREATE_SUCCESS:
+      return { loading: false, success: true, question: action.payload }
+    case CONSTANT.CREATE_FAIL:
+      return { loading: false, error: action.payload }
+    case CONSTANT.CREATE_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+const deleteQuestion = (state = {}, action) => {
+  switch (action.type) {
+    case CONSTANT.DELETE_REQUEST:
+      return { loading: true }
+    case CONSTANT.DELETE_SUCCESS:
+      return { loading: false, success: true }
+    case CONSTANT.DELETE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
 export const QuestionReducer = {
   getList,
+  getOne,
   getDetail,
-  update,
+  updateQuestion,
+  createQuestion,
+  deleteQuestion,
 }

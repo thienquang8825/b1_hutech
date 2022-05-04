@@ -7,8 +7,11 @@ import { UserReducer } from './reducers/user.reducer'
 
 const reducer = combineReducers({
   questionGetList: QuestionReducer.getList,
+  questionGetOne: QuestionReducer.getOne,
   questionGetDetail: QuestionReducer.getDetail,
-  questionUpdate: QuestionReducer.update,
+  questionUpdate: QuestionReducer.updateQuestion,
+  questionCreate: QuestionReducer.createQuestion,
+  questionDelete: QuestionReducer.deleteQuestion,
 
   userLogin: UserReducer.login,
   userRegister: UserReducer.register,

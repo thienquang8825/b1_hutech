@@ -7,6 +7,7 @@ import { ErrorMiddleware } from './middleware/error.middleware.js'
 
 import userRoutes from './routes/user.route.js'
 import grammarRoutes from './routes/grammar.route.js'
+import readingRoutes from './routes/reading.route.js'
 
 dotenv.config()
 
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRoutes)
 app.use('/api/grammar', grammarRoutes)
+app.use('/api/reading', readingRoutes)
 
 app.use(ErrorMiddleware.notFoundUrl)
 

@@ -1,15 +1,17 @@
 import React from 'react'
 import checkResult from '../utils/checkResult'
 
-const Quiz = ({ question, show, number }) => {
+const Quiz = ({ question, show, number, type }) => {
   return (
     <div key={question._id} className='row mb-3'>
       <div>
-        {number} - {question.question}
+        {number}. {question.question}
       </div>
       {question.answers.map((answer) => (
         <div
-          className='form-check ps-5 col-md-3 col-sm-6 my-2'
+          className={`form-check ps-5 my-2 ${
+            type === 'grammar' ? 'col-md-3 col-sm-6' : 'col-12'
+          }`}
           key={answer._id}
         >
           <input

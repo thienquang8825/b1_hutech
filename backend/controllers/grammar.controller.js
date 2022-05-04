@@ -8,9 +8,18 @@ const getGrammar = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
-  const count = await Grammar.count({})
+  const keyword = req.query.keyword
+    ? {
+        question: {
+          $regex: req.query.keyword,
+          $options: 'i', //don't care about case sensitive
+        },
+      }
+    : {}
 
-  const questions = await Grammar.find({})
+  const count = await Grammar.count({ ...keyword }) //({ ...keyword }) ~ ({ question: ... })
+
+  const questions = await Grammar.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
@@ -24,7 +33,7 @@ const getGrammar = asyncHandler(async (req, res) => {
 
 // @desc    Get grammar by id
 // @route   GET /api/grammar/:id
-// @access  Public
+// @access  Private/Admin
 const getGrammarById = asyncHandler(async (req, res) => {
   const question = await Grammar.findById(req.params.id)
 
@@ -36,8 +45,8 @@ const getGrammarById = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Update a product
-// @route   PUT /api/products/:id
+// @desc    Update a grammar
+// @route   PUT /api/grammar/:id
 // @access  Private/Admin
 const updateGrammar = asyncHandler(async (req, res) => {
   const { question, answers } = req.body
@@ -56,13 +65,30 @@ const updateGrammar = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Create a grammar
+// @route   POST /api/grammar
+// @access  Private/Admin
+const createGrammar = asyncHandler(async (req, res) => {
+  const { question, answers } = req.body
+
+  console.log(answers)
+
+  const newQuestion = new Grammar({
+    question,
+    answers,
+  })
+
+  const createdQuestion = await newQuestion.save()
+  res.status(201).json(createdQuestion)
+})
+
 // @desc    Delete question
 // @route   DELETE /api/grammar/:id
 // @access  Private/Admin
 const deleteGrammar = asyncHandler(async (req, res) => {
   const question = await Grammar.findById(req.params.id)
 
-  if (product) {
+  if (question) {
     await question.remove()
     res.json({ message: 'Question removed' })
   } else {
@@ -75,5 +101,6 @@ export const GrammarController = {
   getGrammar,
   getGrammarById,
   updateGrammar,
+  createGrammar,
   deleteGrammar,
 }

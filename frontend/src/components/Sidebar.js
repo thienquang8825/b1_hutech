@@ -6,13 +6,14 @@ const Sidebar = () => {
   return (
     <Nav className='flex-column bg-secondary rounded'>
       <NavDropdown title='Reading' id='basic-nav-dropdown'>
-        <LinkContainer to='/grammar'>
+        <LinkContainer to='/admin/grammar'>
           <NavDropdown.Item>Vocabulary & Grammar</NavDropdown.Item>
         </LinkContainer>
         <NavDropdown.Item href='#action/3.2'>Signs</NavDropdown.Item>
-        <NavDropdown.Item href='#action/3.3'>
-          Reading Comprehension
-        </NavDropdown.Item>
+        <LinkContainer to='/admin/reading'>
+          <NavDropdown.Item>Reading Comprehension</NavDropdown.Item>
+        </LinkContainer>
+
         <NavDropdown.Item href='#action/3.4'>Cloze text</NavDropdown.Item>
       </NavDropdown>
       <NavDropdown title='Writing' id='basic-nav-dropdown'>

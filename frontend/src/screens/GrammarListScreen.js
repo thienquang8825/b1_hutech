@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { QuestionAction } from '../actions/question.action'
 import Paginate from '../components/Paginate'
+import SearchBox from '../components/SearchBox'
 
 const GrammarListScreen = () => {
-  const { pageNumber } = useParams()
+  const { keyword, pageNumber } = useParams()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -17,16 +18,29 @@ const GrammarListScreen = () => {
   const questionGetList = useSelector((state) => state.questionGetList)
   const { questions, page, pages } = questionGetList
 
+  const questionDelete = useSelector((state) => state.questionDelete)
+  const { success: successDelete } = questionDelete
+
   const pageSize = 10
   let count = pageSize * (page - 1)
 
   useEffect(() => {
     if (userSignIn && userSignIn.isAdmin) {
-      dispatch(QuestionAction.getList(pageNumber))
+      dispatch(QuestionAction.getList(keyword, pageNumber))
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, pageNumber, userSignIn])
+  }, [dispatch, navigate, keyword, pageNumber, userSignIn, successDelete])
+
+  const deleteHandler = (questionId) => {
+    if (window.confirm('Are you sure???')) {
+      dispatch(QuestionAction.deleteQuestion(questionId))
+    }
+  }
+
+  const createHanlder = () => {
+    navigate('/admin/grammar/create')
+  }
 
   return (
     <>
@@ -35,7 +49,16 @@ const GrammarListScreen = () => {
           <Sidebar />
         </div>
         <div className='col-md-9 border'>
-          <table className='table table-bordered text-center mb-0 table-hover'>
+          <div className='row justify-content-between'>
+            <SearchBox />
+            <div className='col-6 text-end'>
+              <button className='btn btn-success my-3' onClick={createHanlder}>
+                Create new
+              </button>
+            </div>
+          </div>
+
+          <table className='table table-bordered text-center mb-3 table-hover'>
             <thead className='bg-secondary text-dark'>
               <tr>
                 <th className='' style={{ width: '5%' }}>
@@ -59,7 +82,10 @@ const GrammarListScreen = () => {
                     </Link>
                   </td>
                   <td className='align-middle'>
-                    <button className='btn btn-sm btn-danger'>
+                    <button
+                      className='btn btn-sm btn-danger'
+                      onClick={() => deleteHandler(question._id)}
+                    >
                       <i className='fa fa-times'></i>
                     </button>
                   </td>
@@ -67,7 +93,7 @@ const GrammarListScreen = () => {
               ))}
             </tbody>
           </table>
-          <Paginate page={page} pages={pages} />
+          <Paginate page={page} pages={pages} keyword={keyword} />
         </div>
       </div>
     </>

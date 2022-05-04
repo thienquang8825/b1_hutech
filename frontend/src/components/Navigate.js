@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Navigate = ({ page, pages }) => {
+const Navigate = ({ page, pages, type }) => {
   return (
     <div className='row justify-content-between mb-4'>
       <Link
-        to={page === 1 ? `/grammar/page/${page}` : `/grammar/page/${page - 1}`}
+        to={page === 1 ? `/${type}/page/${page}` : `/${type}/page/${page - 1}`}
         className='col-sm-2 col-md-1 ms-5'
       >
         <button className='btn btn-primary w-100' disabled={page === 1}>
@@ -14,7 +14,7 @@ const Navigate = ({ page, pages }) => {
       </Link>
       <Link
         to={
-          page === pages ? `/grammar/page/${page}` : `/grammar/page/${page + 1}`
+          page === pages ? `/${type}/page/${page}` : `/${type}/page/${page + 1}`
         }
         className='col-sm-2 col-md-1 me-5'
       >
