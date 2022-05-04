@@ -6,10 +6,10 @@ import { QuestionAction } from '../actions/question.action'
 import Paginate from '../components/Paginate'
 import SearchBox from '../components/SearchBox'
 
-const GrammarListScreen = () => {
+const ReadingListScreen = () => {
   const { keyword, pageNumber } = useParams()
 
-  const type = 'grammar'
+  const type = 'reading'
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,20 +28,20 @@ const GrammarListScreen = () => {
 
   useEffect(() => {
     if (userSignIn && userSignIn.isAdmin) {
-      dispatch(QuestionAction.getList(keyword, pageNumber, type))
+      dispatch(QuestionAction.getListAuthorize(keyword, pageNumber, type))
     } else {
       navigate('/login')
     }
   }, [dispatch, navigate, keyword, pageNumber, userSignIn, successDelete])
 
   const deleteHandler = (questionId) => {
-    if (window.confirm('Are you sure???')) {
-      dispatch(QuestionAction.deleteQuestion(questionId))
-    }
+    // if (window.confirm('Are you sure???')) {
+    //   dispatch(QuestionAction.deleteQuestion(questionId))
+    // }
   }
 
   const createHanlder = () => {
-    navigate('/admin/grammar/create')
+    // navigate('/admin/grammar/create')
   }
 
   return (
@@ -66,7 +66,7 @@ const GrammarListScreen = () => {
                 <th className='' style={{ width: '5%' }}>
                   Or
                 </th>
-                <th>Vocabulary & Grammar</th>
+                <th>Reading Comprehension</th>
                 <th style={{ width: '10%' }}>Edit</th>
                 <th style={{ width: '10%' }}>Del</th>
               </tr>
@@ -75,7 +75,7 @@ const GrammarListScreen = () => {
               {questions.map((question) => (
                 <tr key={question._id}>
                   <td className='align-middle'>{++count}</td>
-                  <td className='align-middle'>{question.question}</td>
+                  <td className='align-middle'>{question.title}</td>
                   <td className='align-middle'>
                     <Link to={`/admin/${type}/${question._id}`}>
                       <button className='btn btn-sm btn-primary'>
@@ -102,4 +102,4 @@ const GrammarListScreen = () => {
   )
 }
 
-export default GrammarListScreen
+export default ReadingListScreen

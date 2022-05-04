@@ -9,6 +9,8 @@ import { QUESTION_CONSTANT } from '../constants/question.constant'
 const GrammarListScreen = () => {
   const { id: questionId } = useParams()
 
+  const type = 'grammar'
+
   const [question, setQuestion] = useState('')
   const [answerA, setAnswerA] = useState({})
   const [answerB, setAnswerB] = useState({})
@@ -51,7 +53,7 @@ const GrammarListScreen = () => {
     } else {
       if (questionId !== undefined) {
         if (!questionDetail || questionDetail._id !== questionId) {
-          dispatch(QuestionAction.getDetail(questionId))
+          dispatch(QuestionAction.getDetail(questionId, type))
         } else {
           setQuestion(questionDetail.question)
           setAnswerA(questionDetail.answers[0])

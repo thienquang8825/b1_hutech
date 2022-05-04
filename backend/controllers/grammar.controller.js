@@ -4,7 +4,7 @@ import asyncHandler from 'express-async-handler'
 // @desc    Get grammar
 // @route   GET /api/grammar
 // @access  Public
-const getGrammar = asyncHandler(async (req, res) => {
+const getGrammarList = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
@@ -51,13 +51,13 @@ const getGrammarById = asyncHandler(async (req, res) => {
 const updateGrammar = asyncHandler(async (req, res) => {
   const { question, answers } = req.body
 
-  const q = await Grammar.findById(req.params.id)
+  const existQuestion = await Grammar.findById(req.params.id)
 
-  if (q) {
-    q.question = question
-    q.answers = answers
+  if (existQuestion) {
+    existQuestion.question = question
+    existQuestion.answers = answers
 
-    const updatedQuestion = await q.save()
+    const updatedQuestion = await existQuestion.save()
     res.json(updatedQuestion)
   } else {
     res.status(404)
@@ -98,7 +98,7 @@ const deleteGrammar = asyncHandler(async (req, res) => {
 })
 
 export const GrammarController = {
-  getGrammar,
+  getGrammarList,
   getGrammarById,
   updateGrammar,
   createGrammar,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const SearchBox = () => {
+const SearchBox = ({ type }) => {
   const [keyword, setKeyword] = useState('')
 
   const navigate = useNavigate()
@@ -9,9 +9,9 @@ const SearchBox = () => {
   const searchHandler = (e) => {
     e.preventDefault()
     if (keyword.trim()) {
-      navigate(`/admin/grammar/search/${keyword}`)
+      navigate(`/admin/${type}/search/${keyword}`)
     } else {
-      navigate('/admin/grammar')
+      navigate(`/admin/${type}`)
     }
   }
 
@@ -28,7 +28,11 @@ const SearchBox = () => {
           <input
             type='text'
             className='form-control'
-            placeholder='Search by question...'
+            placeholder={
+              type === 'reading'
+                ? 'Search by paragrap...'
+                : 'Search by question...'
+            }
             onChange={(e) => setKeyword(e.target.value)}
             onKeyPress={onKeyPressHandler}
           />

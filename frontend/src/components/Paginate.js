@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Paginate = ({ pages, page, keyword = '' }) => {
+const Paginate = ({ pages, page, keyword = '', type }) => {
   return (
     pages > 1 && (
       <div className='col-12 pb-1 mt-3'>
@@ -17,8 +17,8 @@ const Paginate = ({ pages, page, keyword = '' }) => {
                   key={x + 1}
                   to={
                     keyword
-                      ? `/admin/grammar/search/${keyword}/page/${x + 1}`
-                      : `/admin/grammar/page/${x + 1}`
+                      ? `/admin/${type}/search/${keyword}/page/${x + 1}`
+                      : `/admin/${type}/page/${x + 1}`
                   }
                 >
                   {x + 1}

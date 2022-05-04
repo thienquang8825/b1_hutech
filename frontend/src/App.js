@@ -10,6 +10,8 @@ import RegisterScreen from './screens/Register'
 import GrammarListScreen from './screens/GrammarListScreen'
 import GrammarEditScreen from './screens/GrammarEditScreen'
 import ReadingScreen from './screens/ReadingScreen'
+import ReadingListScreen from './screens/ReadingListScreen'
+import ReadingEditScreen from './screens/ReadingEditScreen'
 
 const App = () => {
   return (
@@ -19,13 +21,16 @@ const App = () => {
         <Container>
           <Routes>
             <Route path='/' element={<HomeScreen />} exact />
+
+            <Route path='/login' element={<LoginScreen />} />
+            <Route path='/register' element={<RegisterScreen />} />
+
+            {/* --- Grammar --- */}
             <Route path='/grammar' element={<GrammarScreen />} />
             <Route
               path='/grammar/page/:pageNumber'
               element={<GrammarScreen />}
             />
-            <Route path='/login' element={<LoginScreen />} />
-            <Route path='/register' element={<RegisterScreen />} />
             <Route
               path='/admin/grammar'
               element={<GrammarListScreen />}
@@ -54,6 +59,24 @@ const App = () => {
             <Route
               path='/reading/page/:pageNumber'
               element={<ReadingScreen />}
+            />
+            <Route
+              path='/admin/reading'
+              element={<ReadingListScreen />}
+              exact
+            />
+            <Route
+              path='/admin/reading/page/:pageNumber'
+              element={<ReadingListScreen />}
+            />
+            <Route path='/admin/reading/:id' element={<ReadingEditScreen />} />
+            <Route
+              path='/admin/reading/search/:keyword'
+              element={<ReadingListScreen />}
+            />
+            <Route
+              path='/admin/reading/search/:keyword/page/:pageNumber'
+              element={<ReadingListScreen />}
             />
           </Routes>
         </Container>

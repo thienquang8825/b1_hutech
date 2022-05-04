@@ -6,12 +6,13 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(GrammarController.getGrammar)
   .post(
     AuthMiddleware.authorize,
     AuthMiddleware.admin,
     GrammarController.createGrammar
   )
+
+router.route('/list').get(GrammarController.getGrammarList)
 
 router
   .route('/:id')

@@ -4,13 +4,13 @@ import { UserAction } from './user.action'
 
 //syntax redux-thunk => allow to add a function within a fuction
 const getList =
-  (keyword = '', pageNumber = '') =>
+  (keyword = '', pageNumber = '', type) =>
   async (dispatch) => {
     try {
       dispatch({ type: CONSTANT.GET_LIST_REQUEST })
 
       const { data } = await axios.get(
-        `/api/grammar?keyword=${keyword}&pageNumber=${pageNumber}`
+        `/api/${type}/list?keyword=${keyword}&pageNumber=${pageNumber}`
       )
 
       dispatch({
@@ -28,13 +28,55 @@ const getList =
     }
   }
 
+const getListAuthorize =
+  (keyword = '', pageNumber = '', type) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: CONSTANT.GET_LIST_REQUEST })
+
+      const {
+        userLogin: { userSignIn },
+      } = getState()
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userSignIn.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `/api/${type}/list?keyword=${keyword}&pageNumber=${pageNumber}`,
+        config
+      )
+
+      dispatch({
+        type: CONSTANT.GET_LIST_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(UserAction.logout())
+      }
+      dispatch({
+        type: CONSTANT.GET_DETAIL_FAIL,
+        payload: message,
+      })
+    }
+  }
+
 const getOne =
   (pageNumber = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: CONSTANT.GET_ONE_REQUEST })
 
-      const { data } = await axios.get(`/api/reading?pageNumber=${pageNumber}`)
+      const { data } = await axios.get(
+        `/api/reading/one?pageNumber=${pageNumber}`
+      )
 
       dispatch({
         type: CONSTANT.GET_ONE_SUCCESS,
@@ -51,7 +93,7 @@ const getOne =
     }
   }
 
-const getDetail = (questionId) => async (dispatch, getState) => {
+const getDetail = (questionId, type) => async (dispatch, getState) => {
   try {
     dispatch({ type: CONSTANT.GET_DETAIL_REQUEST })
 
@@ -65,7 +107,9 @@ const getDetail = (questionId) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/grammar/${questionId}`, config)
+    const { data } = await axios.get(`/api/${type}/${questionId}`, config)
+
+    console.log(data)
 
     dispatch({
       type: CONSTANT.GET_DETAIL_SUCCESS,
@@ -199,6 +243,7 @@ const deleteQuestion = (questionId) => async (dispatch, getState) => {
 
 export const QuestionAction = {
   getList,
+  getListAuthorize,
   getOne,
   getDetail,
   updateQuestion,

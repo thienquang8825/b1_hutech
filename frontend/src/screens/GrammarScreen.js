@@ -9,6 +9,8 @@ import Aside from '../components/Aside'
 const GrammarScreen = () => {
   const { pageNumber } = useParams()
 
+  const type = 'grammar'
+
   const [clear, setClear] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -21,7 +23,7 @@ const GrammarScreen = () => {
   let count = pageSize * (page - 1)
 
   useEffect(() => {
-    dispatch(QuestionAction.getList('', pageNumber))
+    dispatch(QuestionAction.getList('', pageNumber, type))
   }, [dispatch, pageNumber])
 
   useEffect(() => {
