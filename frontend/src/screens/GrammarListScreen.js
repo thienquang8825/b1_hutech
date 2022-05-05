@@ -36,12 +36,12 @@ const GrammarListScreen = () => {
 
   const deleteHandler = (questionId) => {
     if (window.confirm('Are you sure???')) {
-      dispatch(QuestionAction.deleteQuestion(questionId))
+      dispatch(QuestionAction.deleteQuestion(questionId, type))
     }
   }
 
   const createHanlder = () => {
-    navigate('/admin/grammar/create')
+    navigate(`/admin/${type}/create`)
   }
 
   return (

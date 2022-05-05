@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { QuestionAction } from '../actions/question.action'
 import Message from '../components/Message'
-import { QUESTION_CONSTANT } from '../constants/question.constant'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { QUESTION_CONSTANT } from '../constants/question.constant'
 
 const ReadingEditScreen = () => {
-  const { id: questionId } = useParams()
+  const { id: readingId } = useParams()
 
   const type = 'reading'
   let count = 0
@@ -29,18 +29,87 @@ const ReadingEditScreen = () => {
     error: errorGetDetail,
   } = questionGetDetail
 
-  useEffect(() => {
-    if (!questionDetail || questionDetail._id !== questionId) {
-      dispatch(QuestionAction.getDetail(questionId, type))
-    } else {
-      setTitle(questionDetail.title)
-      setRequire(questionDetail.require)
-      setParagrap(questionDetail.paragrap)
-      setQuestions(questionDetail.questions)
-    }
-  }, [dispatch, questionDetail, questionId])
+  const questionUpdate = useSelector((state) => state.questionUpdate)
+  const {
+    // loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = questionUpdate
 
-  const submitHandler = (e) => {}
+  const questionCreate = useSelector((state) => state.questionCreate)
+  const {
+    // loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+  } = questionCreate
+
+  useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: QUESTION_CONSTANT.UPDATE_RESET })
+      window.alert('Question updated')
+      navigate(`/admin/${type}`)
+    } else if (successCreate) {
+      dispatch({ type: QUESTION_CONSTANT.CREATE_RESET })
+      window.alert('Question created')
+      navigate(`/admin/${type}`)
+    } else {
+      if (readingId !== undefined) {
+        if (!questionDetail || questionDetail._id !== readingId) {
+          dispatch(QuestionAction.getDetail(readingId, type))
+        } else {
+          setTitle(questionDetail.title)
+          setRequire(questionDetail.require)
+          setParagrap(questionDetail.paragrap)
+          setQuestions(questionDetail.questions)
+        }
+      }
+    }
+  }, [
+    dispatch,
+    navigate,
+    questionDetail,
+    readingId,
+    successCreate,
+    successUpdate,
+  ])
+
+  const createQuestionHanlder = () => {
+    navigate(`/admin/${type}/${questionDetail._id}/question/create`)
+  }
+
+  const deleteQuestionHandler = (questionId) => {
+    if (window.confirm('Are you sure???')) {
+      dispatch(
+        QuestionAction.updateQuestion(
+          {
+            ...questionDetail,
+            questions: questionDetail.questions.filter(
+              (x) => x._id !== questionId
+            ),
+          },
+          type
+        )
+      )
+    }
+  }
+
+  const createUpdateReadingHandler = () => {
+    if (readingId === undefined) {
+      dispatch(
+        QuestionAction.createQuestion(
+          { title, require, paragrap, questions },
+          type
+        )
+      )
+    } else {
+      dispatch(
+        QuestionAction.updateQuestion(
+          { ...questionDetail, title, require, paragrap, questions },
+          type
+        )
+      )
+    }
+  }
 
   return (
     <>
@@ -49,12 +118,12 @@ const ReadingEditScreen = () => {
           <Sidebar type={type} />
         </div>
         <div className='col-md-9 border'>
-          {/* {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-          {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
+          {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+          {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
           {errorGetDetail ? (
             <Message variant='danger'>{errorGetDetail}</Message>
           ) : (
-            <form onSubmit={submitHandler}>
+            <>
               <div className='form-group my-3'>
                 <input
                   className='form-control bg-secondary'
@@ -90,7 +159,7 @@ const ReadingEditScreen = () => {
                 <div className='col-12 text-end'>
                   <button
                     className='btn btn-success mb-3'
-                    // onClick={createHanlder}
+                    onClick={createQuestionHanlder}
                   >
                     Create new
                   </button>
@@ -113,7 +182,9 @@ const ReadingEditScreen = () => {
                       <td className='align-middle'>{++count}</td>
                       <td className='align-middle'>{question.question}</td>
                       <td className='align-middle'>
-                        <Link to={`/admin/${type}/${question._id}`}>
+                        <Link
+                          to={`/admin/${type}/${questionDetail._id}/question/${question._id}`}
+                        >
                           <button className='btn btn-sm btn-primary'>
                             <i className='fas fa-edit'></i>
                           </button>
@@ -122,7 +193,7 @@ const ReadingEditScreen = () => {
                       <td className='align-middle'>
                         <button
                           className='btn btn-sm btn-danger'
-                          // onClick={() => deleteHandler(question._id)}
+                          onClick={() => deleteQuestionHandler(question._id)}
                         >
                           <i className='fa fa-times'></i>
                         </button>
@@ -131,13 +202,16 @@ const ReadingEditScreen = () => {
                   ))}
                 </tbody>
               </table>
-
               <div className='form-group my-3 text-center'>
-                <button type='submit' className='btn btn-primary py-2 px-4'>
-                  {questionId !== undefined ? 'Update' : 'Create'}
+                <button
+                  type='submit'
+                  className='btn btn-primary py-2 px-4'
+                  onClick={createUpdateReadingHandler}
+                >
+                  {readingId === undefined ? 'Create' : 'Update'}
                 </button>
               </div>
-            </form>
+            </>
           )}
         </div>
       </div>

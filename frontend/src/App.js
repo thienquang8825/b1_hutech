@@ -12,6 +12,7 @@ import GrammarEditScreen from './screens/GrammarEditScreen'
 import ReadingScreen from './screens/ReadingScreen'
 import ReadingListScreen from './screens/ReadingListScreen'
 import ReadingEditScreen from './screens/ReadingEditScreen'
+import ReadingQuizScreen from './screens/ReadingQuizScreen'
 
 const App = () => {
   return (
@@ -69,6 +70,10 @@ const App = () => {
               path='/admin/reading/page/:pageNumber'
               element={<ReadingListScreen />}
             />
+            <Route
+              path='/admin/reading/create'
+              element={<ReadingEditScreen />}
+            />
             <Route path='/admin/reading/:id' element={<ReadingEditScreen />} />
             <Route
               path='/admin/reading/search/:keyword'
@@ -77,6 +82,10 @@ const App = () => {
             <Route
               path='/admin/reading/search/:keyword/page/:pageNumber'
               element={<ReadingListScreen />}
+            />
+            <Route
+              path='/admin/reading/:readingId/question/:questionId'
+              element={<ReadingQuizScreen />}
             />
           </Routes>
         </Container>

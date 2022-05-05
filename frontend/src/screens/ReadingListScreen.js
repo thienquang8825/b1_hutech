@@ -35,13 +35,13 @@ const ReadingListScreen = () => {
   }, [dispatch, navigate, keyword, pageNumber, userSignIn, successDelete])
 
   const deleteHandler = (questionId) => {
-    // if (window.confirm('Are you sure???')) {
-    //   dispatch(QuestionAction.deleteQuestion(questionId))
-    // }
+    if (window.confirm('Are you sure???')) {
+      dispatch(QuestionAction.deleteQuestion(questionId, type))
+    }
   }
 
   const createHanlder = () => {
-    // navigate('/admin/grammar/create')
+    navigate(`/admin/${type}/create`)
   }
 
   return (

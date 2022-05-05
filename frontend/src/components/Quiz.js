@@ -7,39 +7,40 @@ const Quiz = ({ question, show, number, type }) => {
       <div>
         {number}. {question.question}
       </div>
-      {question.answers.map((answer) => (
-        <div
-          className={`form-check ps-5 my-2 ${
-            type === 'grammar' ? 'col-md-3 col-sm-6' : 'col-12'
-          }`}
-          key={answer._id}
-        >
-          <input
-            className='form-check-input'
-            type='radio'
-            name={question._id}
-            id={answer._id}
-            defaultChecked={show && answer.isCorrect === true}
-            disabled={show && !answer.isCorrect}
-            onChange={(e) => checkResult(answer)}
-          />
-
-          <label
-            className={`form-check-label ${
-              show && answer.isCorrect && 'text-success'
+      {question.answers &&
+        question.answers.map((answer) => (
+          <div
+            className={`form-check ps-5 my-2 ${
+              type === 'grammar' ? 'col-md-3 col-sm-6' : 'col-12'
             }`}
-            htmlFor={answer._id}
+            key={answer._id}
           >
-            {answer.answer}
-            {show && answer.isCorrect && (
-              <>
-                {' '}
-                <i className='fas fa-check'></i>
-              </>
-            )}
-          </label>
-        </div>
-      ))}
+            <input
+              className='form-check-input'
+              type='radio'
+              name={question._id}
+              id={answer._id}
+              defaultChecked={show && answer.isCorrect === true}
+              disabled={show && !answer.isCorrect}
+              onChange={(e) => checkResult(answer)}
+            />
+
+            <label
+              className={`form-check-label ${
+                show && answer.isCorrect && 'text-success'
+              }`}
+              htmlFor={answer._id}
+            >
+              {answer.answer}
+              {show && answer.isCorrect && (
+                <>
+                  {' '}
+                  <i className='fas fa-check'></i>
+                </>
+              )}
+            </label>
+          </div>
+        ))}
     </div>
   )
 }

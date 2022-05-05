@@ -50,7 +50,7 @@ const ReadingScreen = () => {
                 {reading.title}: {reading.require}
               </strong>
             </p>
-            <p>{reading.paragrap}</p>
+            <div dangerouslySetInnerHTML={{ __html: reading.paragrap }}></div>
             {reading.questions &&
               reading.questions.map((question) => (
                 <Quiz

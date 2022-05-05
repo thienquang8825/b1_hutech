@@ -109,8 +109,6 @@ const getDetail = (questionId, type) => async (dispatch, getState) => {
 
     const { data } = await axios.get(`/api/${type}/${questionId}`, config)
 
-    console.log(data)
-
     dispatch({
       type: CONSTANT.GET_DETAIL_SUCCESS,
       payload: data,
@@ -130,7 +128,7 @@ const getDetail = (questionId, type) => async (dispatch, getState) => {
   }
 }
 
-const updateQuestion = (question) => async (dispatch, getState) => {
+const updateQuestion = (question, type) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CONSTANT.UPDATE_REQUEST,
@@ -148,7 +146,7 @@ const updateQuestion = (question) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/grammar/${question._id}`,
+      `/api/${type}/${question._id}`,
       question,
       config
     )
@@ -171,7 +169,7 @@ const updateQuestion = (question) => async (dispatch, getState) => {
   }
 }
 
-const createQuestion = (question) => async (dispatch, getState) => {
+const createQuestion = (question, type) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CONSTANT.CREATE_REQUEST,
@@ -188,7 +186,7 @@ const createQuestion = (question) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post(`/api/grammar`, question, config)
+    const { data } = await axios.post(`/api/${type}`, question, config)
 
     dispatch({
       type: CONSTANT.CREATE_SUCCESS,
@@ -209,7 +207,7 @@ const createQuestion = (question) => async (dispatch, getState) => {
   }
 }
 
-const deleteQuestion = (questionId) => async (dispatch, getState) => {
+const deleteQuestion = (questionId, type) => async (dispatch, getState) => {
   try {
     dispatch({ type: CONSTANT.DELETE_REQUEST })
 
@@ -223,7 +221,7 @@ const deleteQuestion = (questionId) => async (dispatch, getState) => {
       },
     }
 
-    await axios.delete(`/api/grammar/${questionId}`, config)
+    await axios.delete(`/api/${type}/${questionId}`, config)
 
     dispatch({ type: CONSTANT.DELETE_SUCCESS })
   } catch (error) {
