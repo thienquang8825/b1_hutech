@@ -29,7 +29,7 @@ const getList =
   }
 
 const getListAuthorize =
-  (keyword = '', pageNumber = '', type) =>
+  (type, keyword = '', pageNumber = '') =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: CONSTANT.GET_LIST_REQUEST })
@@ -69,13 +69,13 @@ const getListAuthorize =
   }
 
 const getOne =
-  (pageNumber = '') =>
+  (type, pageNumber = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: CONSTANT.GET_ONE_REQUEST })
 
       const { data } = await axios.get(
-        `/api/reading/one?pageNumber=${pageNumber}`
+        `/api/${type}/one?pageNumber=${pageNumber}`
       )
 
       dispatch({
@@ -128,7 +128,7 @@ const getDetail = (questionId, type) => async (dispatch, getState) => {
   }
 }
 
-const updateQuestion = (question, type) => async (dispatch, getState) => {
+const updateQuestion = (type, question) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CONSTANT.UPDATE_REQUEST,
@@ -169,7 +169,7 @@ const updateQuestion = (question, type) => async (dispatch, getState) => {
   }
 }
 
-const createQuestion = (question, type) => async (dispatch, getState) => {
+const createQuestion = (type, question) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CONSTANT.CREATE_REQUEST,
@@ -207,7 +207,7 @@ const createQuestion = (question, type) => async (dispatch, getState) => {
   }
 }
 
-const deleteQuestion = (questionId, type) => async (dispatch, getState) => {
+const deleteQuestion = (type, questionId) => async (dispatch, getState) => {
   try {
     dispatch({ type: CONSTANT.DELETE_REQUEST })
 

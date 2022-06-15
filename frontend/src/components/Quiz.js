@@ -11,7 +11,7 @@ const Quiz = ({ question, show, number, type }) => {
         question.answers.map((answer) => (
           <div
             className={`form-check ps-5 my-2 ${
-              type === 'grammar' ? 'col-md-3 col-sm-6' : 'col-12'
+              type === 'reading' ? 'col-12' : 'col-md-3 col-sm-6'
             }`}
             key={answer._id}
           >

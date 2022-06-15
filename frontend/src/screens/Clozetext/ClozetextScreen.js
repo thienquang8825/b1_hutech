@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Quiz from '../components/Quiz'
-import Navigate from '../components/Navigate'
-import Aside from '../components/Aside'
+import { QuestionAction } from '../../actions/question.action'
+import Quiz from '../../components/Quiz'
+import Navigate from '../../components/Navigate'
+import Aside from '../../components/Aside'
 
-const ReadingScreen = () => {
+const ClozetextScreen = () => {
   const { pageNumber } = useParams()
 
-  const type = 'reading'
+  const type = 'clozetext'
 
   const [clear, setClear] = useState(false)
   const [show, setShow] = useState(false)
@@ -17,7 +17,7 @@ const ReadingScreen = () => {
   const dispatch = useDispatch()
 
   const questionGetOne = useSelector((state) => state.questionGetOne)
-  const { question: reading, page, pages } = questionGetOne
+  const { question: clozetext, page, pages } = questionGetOne
 
   let count = 0
 
@@ -33,7 +33,7 @@ const ReadingScreen = () => {
 
   return (
     <>
-      <h1 className='text-center m-3'>Reading Comprehension</h1>
+      <h1 className='text-center m-3'>Cloze text</h1>
       <div className='row mt-3'>
         <div className='col-md-3 border'>
           <Aside
@@ -42,19 +42,19 @@ const ReadingScreen = () => {
             setShow={setShow}
             page={page}
             pages={pages}
-            type='reading'
+            type='clozetext'
           />
         </div>
         {clear === false && (
           <div className='col-md-9 border'>
             <p>
               <strong>
-                {reading.title}: {reading.require}
+                {clozetext.title}: {clozetext.require}
               </strong>
             </p>
-            <div dangerouslySetInnerHTML={{ __html: reading.paragrap }}></div>
-            {reading.questions &&
-              reading.questions.map((question) => (
+            <div dangerouslySetInnerHTML={{ __html: clozetext.paragrap }}></div>
+            {clozetext.questions &&
+              clozetext.questions.map((question) => (
                 <Quiz
                   key={question._id}
                   question={question}
@@ -62,7 +62,7 @@ const ReadingScreen = () => {
                   number={(++count).toString()}
                 />
               ))}
-            <Navigate page={page} pages={pages} type='reading' />
+            <Navigate page={page} pages={pages} type='clozetext' />
           </div>
         )}
       </div>
@@ -70,4 +70,4 @@ const ReadingScreen = () => {
   )
 }
 
-export default ReadingScreen
+export default ClozetextScreen

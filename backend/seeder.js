@@ -7,6 +7,8 @@ import grammar from './data/grammar.js'
 import Grammar from './models/grammar.model.js'
 import reading from './data/reading.js'
 import Reading from './models/reading.model.js'
+import clozetext from './data/clozetext.js'
+import Clozetext from './models/clozetext.model.js'
 
 dotenv.config()
 
@@ -17,10 +19,12 @@ const importData = async () => {
     await User.deleteMany()
     await Grammar.deleteMany()
     await Reading.deleteMany()
+    await Clozetext.deleteMany()
 
     await User.insertMany(users)
     await Grammar.insertMany(grammar)
     await Reading.insertMany(reading)
+    await Clozetext.insertMany(clozetext)
 
     console.log('Data imported!!!'.green.inverse)
     process.exit()

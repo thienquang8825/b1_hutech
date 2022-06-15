@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import { QUESTION_CONSTANT } from '../constants/question.constant'
-import Message from '../components/Message'
-import Sidebar from '../components/Sidebar'
+import { QuestionAction } from '../../actions/question.action'
+import { QUESTION_CONSTANT } from '../../constants/question.constant'
+import Message from '../../components/Message'
+import Sidebar from '../../components/Sidebar'
 
 const ReadingQuizScreen = () => {
-  const { readingId, questionId } = useParams()
+  const { clozetextId, questionId } = useParams()
 
-  const type = 'reading'
+  const type = 'clozetext'
 
-  const [question, setQuestion] = useState('')
+  // const [question, setQuestion] = useState('')
   const [answerA, setAnswerA] = useState({})
   const [answerB, setAnswerB] = useState({})
   const [answerC, setAnswerC] = useState({})
@@ -43,14 +43,14 @@ const ReadingQuizScreen = () => {
     if (successUpdate) {
       dispatch({ type: QUESTION_CONSTANT.UPDATE_RESET })
       window.alert('Question updated')
-      navigate(`/admin/${type}/${readingId}`)
+      navigate(`/admin/${type}/${clozetextId}`)
     } else {
-      if (!questionDetail || questionDetail._id !== readingId) {
-        dispatch(QuestionAction.getDetail(readingId, type))
+      if (!questionDetail || questionDetail._id !== clozetextId) {
+        dispatch(QuestionAction.getDetail(clozetextId, type))
       }
 
       if (quiz) {
-        setQuestion(quiz.question)
+        // setQuestion(quiz.question)
         setAnswerA(quiz.answers[0])
         setAnswerB(quiz.answers[1])
         setAnswerC(quiz.answers[2])
@@ -63,7 +63,7 @@ const ReadingQuizScreen = () => {
     questionDetail,
     questionId,
     quiz,
-    readingId,
+    clozetextId,
     successUpdate,
   ])
 
@@ -77,7 +77,7 @@ const ReadingQuizScreen = () => {
   const changeQuestions = () => {
     return questionDetail.questions.map((x) =>
       x._id === questionId
-        ? { ...x, question, answers: [answerA, answerB, answerC, answerD] }
+        ? { ...x, answers: [answerA, answerB, answerC, answerD] }
         : x
     )
   }
@@ -87,7 +87,6 @@ const ReadingQuizScreen = () => {
 
     if (questionId === 'create') {
       questionDetail.questions.push({
-        question,
         answers: [answerA, answerB, answerC, answerD],
       })
       dispatch(QuestionAction.updateQuestion(type, { ...questionDetail }))
@@ -112,7 +111,7 @@ const ReadingQuizScreen = () => {
             <Message variant='danger'>{errorGetDetail}</Message>
           ) : (
             <form onSubmit={submitHandler}>
-              <div className='form-group my-3'>
+              {/* <div className='form-group my-3'>
                 <input
                   className='form-control bg-secondary'
                   type='text'
@@ -121,7 +120,7 @@ const ReadingQuizScreen = () => {
                   onChange={(e) => setQuestion(e.target.value)}
                   required
                 />
-              </div>
+              </div> */}
               <div className='form-group my-3'>
                 <div className='row'>
                   <div className='col-1 text-center'>

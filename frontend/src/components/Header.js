@@ -35,8 +35,9 @@ const Header = () => {
               <LinkContainer to='/reading'>
                 <NavDropdown.Item>Reading Comprehension</NavDropdown.Item>
               </LinkContainer>
-
-              <NavDropdown.Item href='#action/3.4'>Cloze text</NavDropdown.Item>
+              <LinkContainer to='/clozetext'>
+                <NavDropdown.Item>Cloze text</NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
             <NavDropdown title='Writing' id='basic-nav-dropdown'>
               <NavDropdown.Item href='#action/3.1'>

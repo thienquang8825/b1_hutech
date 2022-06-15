@@ -13,6 +13,11 @@ import ReadingScreen from './screens/ReadingScreen'
 import ReadingListScreen from './screens/ReadingListScreen'
 import ReadingEditScreen from './screens/ReadingEditScreen'
 import ReadingQuizScreen from './screens/ReadingQuizScreen'
+import ClozetextScreen from './screens/Clozetext/ClozetextScreen'
+import ClozetextListScreen from './screens/Clozetext/ClozetextListScreen'
+import ClozetextEditScreen from './screens/Clozetext/ClozetextEditScreen'
+import ClozetextQuizScreen from './screens/Clozetext/ClozetextQuizScreen'
+import SignsScreen from './screens/Signs/SignsScreen'
 
 const App = () => {
   return (
@@ -73,6 +78,7 @@ const App = () => {
             <Route
               path='/admin/reading/create'
               element={<ReadingEditScreen />}
+              exact
             />
             <Route path='/admin/reading/:id' element={<ReadingEditScreen />} />
             <Route
@@ -87,6 +93,46 @@ const App = () => {
               path='/admin/reading/:readingId/question/:questionId'
               element={<ReadingQuizScreen />}
             />
+
+            {/* Clozetext */}
+            <Route path='/clozetext' element={<ClozetextScreen />} />
+            <Route
+              path='/clozetext/page/:pageNumber'
+              element={<ClozetextScreen />}
+            />
+            <Route
+              path='/admin/clozetext'
+              element={<ClozetextListScreen />}
+              exact
+            />
+            <Route
+              path='/admin/clozetext/page/:pageNumber'
+              element={<ClozetextListScreen />}
+            />
+            <Route
+              path='/admin/clozetext/create'
+              element={<ClozetextEditScreen />}
+              exact
+            />
+            <Route
+              path='/admin/clozetext/:id'
+              element={<ClozetextEditScreen />}
+            />
+            <Route
+              path='/admin/clozetext/:clozetextId/question/:questionId'
+              element={<ClozetextQuizScreen />}
+            />
+            <Route
+              path='/admin/clozetext/search/:keyword'
+              element={<ClozetextListScreen />}
+            />
+            <Route
+              path='/admin/clozetext/search/:keyword/page/:pageNumber'
+              element={<ClozetextListScreen />}
+            />
+
+            {/* Signs */}
+            <Route path='/signs' element={<SignsScreen />} />
           </Routes>
         </Container>
       </main>

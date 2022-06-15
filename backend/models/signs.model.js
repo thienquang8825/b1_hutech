@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const signsSchema = mongoose.Schema(
   {
     question: {
-      type: String,
+      type: Object,
       required: true,
     },
     answers: [

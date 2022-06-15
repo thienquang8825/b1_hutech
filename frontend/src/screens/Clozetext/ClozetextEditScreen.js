@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import Sidebar from '../components/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Message from '../components/Message'
+import { QuestionAction } from '../../actions/question.action'
+import Message from '../../components/Message'
+import Sidebar from '../../components/Sidebar'
+import { QUESTION_CONSTANT } from '../../constants/question.constant'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { QUESTION_CONSTANT } from '../constants/question.constant'
 
-const ReadingEditScreen = () => {
-  const { id: readingId } = useParams()
+const ClozetextEditScreen = () => {
+  const { id: clozetextId } = useParams()
 
-  const type = 'reading'
+  const type = 'clozetext'
   let count = 0
 
   const [title, setTitle] = useState('')
@@ -53,9 +53,9 @@ const ReadingEditScreen = () => {
       window.alert('Question created')
       navigate(`/admin/${type}`)
     } else {
-      if (readingId !== undefined) {
-        if (!questionDetail || questionDetail._id !== readingId) {
-          dispatch(QuestionAction.getDetail(readingId, type))
+      if (clozetextId !== undefined) {
+        if (!questionDetail || questionDetail._id !== clozetextId) {
+          dispatch(QuestionAction.getDetail(clozetextId, type))
         } else {
           setTitle(questionDetail.title)
           setRequire(questionDetail.require)
@@ -68,7 +68,7 @@ const ReadingEditScreen = () => {
     dispatch,
     navigate,
     questionDetail,
-    readingId,
+    clozetextId,
     successCreate,
     successUpdate,
   ])
@@ -91,7 +91,7 @@ const ReadingEditScreen = () => {
   }
 
   const createUpdateReadingHandler = () => {
-    if (readingId === undefined) {
+    if (clozetextId === undefined) {
       dispatch(
         QuestionAction.createQuestion(type, {
           title,
@@ -182,7 +182,7 @@ const ReadingEditScreen = () => {
                   {questions.map((question) => (
                     <tr key={question._id}>
                       <td className='align-middle'>{++count}</td>
-                      <td className='align-middle'>{question.question}</td>
+                      <td className='align-middle'>question {count}</td>
                       <td className='align-middle'>
                         <Link
                           to={`/admin/${type}/${questionDetail._id}/question/${question._id}`}
@@ -210,7 +210,7 @@ const ReadingEditScreen = () => {
                   className='btn btn-primary py-2 px-4'
                   onClick={createUpdateReadingHandler}
                 >
-                  {readingId === undefined ? 'Create' : 'Update'}
+                  {clozetextId === undefined ? 'Create' : 'Update'}
                 </button>
               </div>
             </>
@@ -221,4 +221,4 @@ const ReadingEditScreen = () => {
   )
 }
 
-export default ReadingEditScreen
+export default ClozetextEditScreen

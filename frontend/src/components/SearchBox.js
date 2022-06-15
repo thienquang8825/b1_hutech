@@ -29,7 +29,7 @@ const SearchBox = ({ type }) => {
             type='text'
             className='form-control'
             placeholder={
-              type === 'reading'
+              type === 'reading' || type === 'clozetext'
                 ? 'Search by paragrap...'
                 : 'Search by question...'
             }

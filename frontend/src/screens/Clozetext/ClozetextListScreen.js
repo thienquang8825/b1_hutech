@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
-import Sidebar from '../components/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Paginate from '../components/Paginate'
-import SearchBox from '../components/SearchBox'
+import { QuestionAction } from '../../actions/question.action'
+import Sidebar from '../../components/Sidebar'
+import Paginate from '../../components/Paginate'
+import SearchBox from '../../components/SearchBox'
 
 const ReadingListScreen = () => {
   const { keyword, pageNumber } = useParams()
 
-  const type = 'reading'
+  const type = 'clozetext'
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -66,7 +66,7 @@ const ReadingListScreen = () => {
                 <th className='' style={{ width: '5%' }}>
                   Or
                 </th>
-                <th>Reading Comprehension</th>
+                <th>Cloze text</th>
                 <th style={{ width: '10%' }}>Edit</th>
                 <th style={{ width: '10%' }}>Del</th>
               </tr>
