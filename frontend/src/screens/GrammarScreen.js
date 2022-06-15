@@ -23,7 +23,7 @@ const GrammarScreen = () => {
   let count = pageSize * (page - 1)
 
   useEffect(() => {
-    dispatch(QuestionAction.getList('', pageNumber, type))
+    dispatch(QuestionAction.getList(type, '', pageNumber))
   }, [dispatch, pageNumber])
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const GrammarScreen = () => {
             pages={pages}
             quantity={quantity}
             pageSize={pageSize}
-            type='grammar'
+            type={type}
           />
         </div>
         {clear === false && (
@@ -56,10 +56,10 @@ const GrammarScreen = () => {
                 question={question}
                 show={show}
                 number={(++count).toString()}
-                type='grammar'
+                type={type}
               />
             ))}
-            <Navigate page={page} pages={pages} type='grammar' />
+            <Navigate page={page} pages={pages} type={type} />
           </div>
         )}
       </div>

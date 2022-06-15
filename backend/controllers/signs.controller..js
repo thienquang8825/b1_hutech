@@ -1,10 +1,10 @@
-import Grammar from '../models/grammar.model.js'
+import Signs from '../models/signs.model.js'
 import asyncHandler from 'express-async-handler'
 
-// @desc    Get grammar
-// @route   GET /api/grammar
+// @desc    Get signs
+// @route   GET /api/signs/list
 // @access  Public
-const getGrammarList = asyncHandler(async (req, res) => {
+const getSignsList = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
@@ -17,9 +17,9 @@ const getGrammarList = asyncHandler(async (req, res) => {
       }
     : {}
 
-  const count = await Grammar.count({ ...keyword }) //({ ...keyword }) ~ ({ question: ... })
+  const count = await Signs.count({ ...keyword }) //({ ...keyword }) ~ ({ question: ... })
 
-  const questions = await Grammar.find({ ...keyword })
+  const questions = await Signs.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
@@ -31,11 +31,11 @@ const getGrammarList = asyncHandler(async (req, res) => {
   })
 })
 
-// @desc    Get grammar by id
-// @route   GET /api/grammar/:id
+// @desc    Get signs by id
+// @route   GET /api/signs/:id
 // @access  Private/Admin
-const getGrammarById = asyncHandler(async (req, res) => {
-  const question = await Grammar.findById(req.params.id)
+const getSignsById = asyncHandler(async (req, res) => {
+  const question = await Signs.findById(req.params.id)
 
   if (question) {
     res.json(question)
@@ -45,13 +45,13 @@ const getGrammarById = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Update a grammar
-// @route   PUT /api/grammar/:id
+// @desc    Update a signs
+// @route   PUT /api/signs/:id
 // @access  Private/Admin
-const updateGrammar = asyncHandler(async (req, res) => {
+const updateSigns = asyncHandler(async (req, res) => {
   const { question, answers } = req.body
 
-  const existQuestion = await Grammar.findById(req.params.id)
+  const existQuestion = await Signs.findById(req.params.id)
 
   if (existQuestion) {
     existQuestion.question = question
@@ -65,13 +65,13 @@ const updateGrammar = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Create a grammar
-// @route   POST /api/grammar
+// @desc    Create a signs
+// @route   POST /api/signs
 // @access  Private/Admin
-const createGrammar = asyncHandler(async (req, res) => {
+const createSigns = asyncHandler(async (req, res) => {
   const { question, answers } = req.body
 
-  const newQuestion = new Grammar({
+  const newQuestion = new Signs({
     question,
     answers,
   })
@@ -80,11 +80,11 @@ const createGrammar = asyncHandler(async (req, res) => {
   res.status(201).json(createdQuestion)
 })
 
-// @desc    Delete question
-// @route   DELETE /api/grammar/:id
+// @desc    Delete signs
+// @route   DELETE /api/signs/:id
 // @access  Private/Admin
-const deleteGrammar = asyncHandler(async (req, res) => {
-  const question = await Grammar.findById(req.params.id)
+const deleteSigns = asyncHandler(async (req, res) => {
+  const question = await Signs.findById(req.params.id)
 
   if (question) {
     await question.remove()
@@ -95,10 +95,10 @@ const deleteGrammar = asyncHandler(async (req, res) => {
   }
 })
 
-export const GrammarController = {
-  getGrammarList,
-  getGrammarById,
-  updateGrammar,
-  createGrammar,
-  deleteGrammar,
+export const SignsController = {
+  getSignsList,
+  getSignsById,
+  updateSigns,
+  createSigns,
+  deleteSigns,
 }

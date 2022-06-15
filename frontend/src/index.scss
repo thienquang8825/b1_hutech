@@ -5,11 +5,11 @@ main {
 
 .upload {
   max-width: 500px;
-  height: 500px;
+  height: 300px;
   width: 100%;
-  border: 5px solid burlywood;
+  border: 5px solid black;
   padding: 15px;
-  margin: 20px;
+  margin: auto;
   position: relative;
 }
 #file_up {
@@ -26,8 +26,8 @@ main {
   top: 0;
   left: 0;
   background: white;
-  color: tan;
-  font-size: 20rem;
+  color: black;
+  font-size: 10rem;
   text-align: center;
   cursor: pointer;
   margin: auto;
@@ -36,7 +36,6 @@ main {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;

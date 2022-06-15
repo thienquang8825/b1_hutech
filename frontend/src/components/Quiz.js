@@ -4,14 +4,29 @@ import checkResult from '../utils/checkResult'
 const Quiz = ({ question, show, number, type }) => {
   return (
     <div key={question._id} className='row mb-3'>
-      <div>
-        {number}. {question.question}
-      </div>
+      {type === 'signs' ? (
+        <div>
+          {number}
+          {' - '}
+          <img
+            src={question.question}
+            alt={question.question}
+            style={{ width: '25%' }}
+          />
+        </div>
+      ) : (
+        <div>
+          {number} - {question.question}
+        </div>
+      )}
+
       {question.answers &&
         question.answers.map((answer) => (
           <div
             className={`form-check ps-5 my-2 ${
-              type === 'reading' ? 'col-12' : 'col-md-3 col-sm-6'
+              type === 'reading' || type === 'signs'
+                ? 'col-12'
+                : 'col-md-3 col-sm-6'
             }`}
             key={answer._id}
           >

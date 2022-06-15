@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
-import Sidebar from '../components/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Paginate from '../components/Paginate'
-import SearchBox from '../components/SearchBox'
+import { QuestionAction } from '../../actions/question.action'
+import Sidebar from '../../components/Sidebar'
+import Paginate from '../../components/Paginate'
+import SearchBox from '../../components/SearchBox'
 
-const GrammarListScreen = () => {
+const SignsListScreen = () => {
   const { keyword, pageNumber } = useParams()
 
-  const type = 'grammar'
+  const type = 'signs'
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -66,33 +66,40 @@ const GrammarListScreen = () => {
                 <th className='' style={{ width: '5%' }}>
                   Or
                 </th>
-                <th>Vocabulary & Grammar</th>
+                <th>Signs</th>
                 <th style={{ width: '10%' }}>Edit</th>
                 <th style={{ width: '10%' }}>Del</th>
               </tr>
             </thead>
             <tbody className='align-middle'>
-              {questions.map((question) => (
-                <tr key={question._id}>
-                  <td className='align-middle'>{++count}</td>
-                  <td className='align-middle'>{question.question}</td>
-                  <td className='align-middle'>
-                    <Link to={`/admin/${type}/${question._id}`}>
-                      <button className='btn btn-sm btn-primary'>
-                        <i className='fas fa-edit'></i>
+              {questions &&
+                questions.map((question) => (
+                  <tr key={question._id}>
+                    <td className='align-middle'>{++count}</td>
+                    <td className='align-middle'>
+                      <img
+                        src={question.question && question.question.url}
+                        alt={question.question && question.question.url}
+                        style={{ width: '25%' }}
+                      />
+                    </td>
+                    <td className='align-middle'>
+                      <Link to={`/admin/${type}/${question._id}`}>
+                        <button className='btn btn-sm btn-primary'>
+                          <i className='fas fa-edit'></i>
+                        </button>
+                      </Link>
+                    </td>
+                    <td className='align-middle'>
+                      <button
+                        className='btn btn-sm btn-danger'
+                        onClick={() => deleteHandler(question._id)}
+                      >
+                        <i className='fa fa-times'></i>
                       </button>
-                    </Link>
-                  </td>
-                  <td className='align-middle'>
-                    <button
-                      className='btn btn-sm btn-danger'
-                      onClick={() => deleteHandler(question._id)}
-                    >
-                      <i className='fa fa-times'></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <Paginate page={page} pages={pages} keyword={keyword} type={type} />
@@ -102,4 +109,4 @@ const GrammarListScreen = () => {
   )
 }
 
-export default GrammarListScreen
+export default SignsListScreen

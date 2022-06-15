@@ -9,7 +9,9 @@ const Sidebar = () => {
         <LinkContainer to='/admin/grammar'>
           <NavDropdown.Item>Vocabulary & Grammar</NavDropdown.Item>
         </LinkContainer>
-        <NavDropdown.Item href='#action/3.2'>Signs</NavDropdown.Item>
+        <LinkContainer to='/admin/signs'>
+          <NavDropdown.Item>Signs</NavDropdown.Item>
+        </LinkContainer>
         <LinkContainer to='/admin/reading'>
           <NavDropdown.Item>Reading Comprehension</NavDropdown.Item>
         </LinkContainer>

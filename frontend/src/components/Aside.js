@@ -47,7 +47,7 @@ const Aside = ({
             }`}
             type='button'
           >
-            {type === 'grammar' ? (
+            {type === 'grammar' || type === 'signs' ? (
               <>
                 {x * pageSize + 1} -{' '}
                 {(x + 1) * pageSize > quantity ? quantity : (x + 1) * pageSize}

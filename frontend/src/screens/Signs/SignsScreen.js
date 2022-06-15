@@ -1,82 +1,70 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-//import { GlobalState } from "../../../GlobalState";
-import Loading from '../../components/Loading/Loading'
-//import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { QuestionAction } from '../../actions/question.action'
+import Quiz from '../../components/Quiz'
+import Navigate from '../../components/Navigate'
+import Aside from '../../components/Aside'
 
-export default function CreateProduct() {
-  //const state = useContext(GlobalState);
-  //const [product, setProduct] = useState(initoalState);
-  //const [brands] = state.brandAPI.brand;
-  const [images, setImages] = useState(false)
-  const [loading, setLoading] = useState(false)
-  //const [isAdmin] = state.userAPI.isAdmin;
-  //const [token] = state.token;
-  //const history = useNavigate();
-  //const param = useParams();
-  //const [products] = state.productsAPI.products;
-  //const [onEdit, setOnEdit] = useState(false);
-  //const [callback, setCallback] = state.productsAPI.callback;
+const SignsScreen = () => {
+  const { pageNumber } = useParams()
 
-  const styleUpload = {
-    display: images ? 'block' : 'none',
-  }
+  const type = 'signs'
 
-  const handleUpload = async (e) => {
-    e.preventDefault()
-    try {
-      const file = e.target.files[0]
-      if (!file) {
-        return alert('File not exist')
-      }
-      if (file.size > 1024 * 1024) {
-        return alert('Size too large')
-      }
-      if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-        return alert('File format is incorrect')
-      }
-      let formData = new FormData()
-      formData.append('file', file)
-      setLoading(true)
-      const res = await axios.post('/api/upload', formData)
-      setLoading(false)
-      setImages(res.data)
-    } catch (error) {
-      alert(error.response.data.msg)
+  const [clear, setClear] = useState(false)
+  const [show, setShow] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const questionGetList = useSelector((state) => state.questionGetList)
+  const { questions, page, pages, quantity } = questionGetList
+
+  const pageSize = 10
+  let count = pageSize * (page - 1)
+
+  useEffect(() => {
+    dispatch(QuestionAction.getList(type, '', pageNumber))
+  }, [dispatch, pageNumber])
+
+  useEffect(() => {
+    if (clear === true) {
+      setClear(false)
     }
-  }
-
-  const handleDestroy = async () => {
-    try {
-      setLoading(true)
-      await axios.post('/api/upload/destroy', { public_id: images.public_id })
-      setLoading(false)
-      setImages(false)
-    } catch (error) {
-      alert(error.response.data.msg)
-    }
-  }
+  }, [clear])
 
   return (
-    <div className='create_product'>
-      <div className='upload'>
-        <input
-          type='file'
-          name='file'
-          id='file_up'
-          onChange={handleUpload}
-        ></input>
-        {loading ? (
-          <div id='file_img'>
-            <Loading></Loading>
-          </div>
-        ) : (
-          <div id='file_img' style={styleUpload}>
-            <img src={images ? images.url : ''} alt=''></img>
-            <span onClick={handleDestroy}>Delete</span>
+    <>
+      <h1 className='text-center m-3'>Vocabulary & Grammar</h1>
+      <div className='row mt-3'>
+        <div className='col-md-3 border'>
+          <Aside
+            show={show}
+            setClear={setClear}
+            setShow={setShow}
+            page={page}
+            pages={pages}
+            quantity={quantity}
+            pageSize={pageSize}
+            type={type}
+          />
+        </div>
+        {clear === false && (
+          <div className='col-md-9 border'>
+            {questions.map((question) => (
+              <Quiz
+                key={question._id}
+                question={{ ...question, question: question.question.url }}
+                show={show}
+                number={(++count).toString()}
+                type={type}
+              />
+            ))}
+            <Navigate page={page} pages={pages} type={type} />
           </div>
         )}
       </div>
-    </div>
+    </>
   )
 }
+
+export default SignsScreen

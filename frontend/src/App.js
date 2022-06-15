@@ -18,6 +18,8 @@ import ClozetextListScreen from './screens/Clozetext/ClozetextListScreen'
 import ClozetextEditScreen from './screens/Clozetext/ClozetextEditScreen'
 import ClozetextQuizScreen from './screens/Clozetext/ClozetextQuizScreen'
 import SignsScreen from './screens/Signs/SignsScreen'
+import SignsListScreen from './screens/Signs/SignsListScreen'
+import SignsEditScreen from './screens/Signs/SignsEditScreen'
 
 const App = () => {
   return (
@@ -132,7 +134,19 @@ const App = () => {
             />
 
             {/* Signs */}
-            <Route path='/signs' element={<SignsScreen />} />
+            <Route path='/signs' element={<SignsScreen />} exact />
+            <Route path='/signs/page/:pageNumber' element={<SignsScreen />} />
+            <Route path='/admin/signs' element={<SignsListScreen />} exact />
+            <Route
+              path='/admin/signs/page/:pageNumber'
+              element={<SignsScreen />}
+            />
+            <Route
+              path='/admin/signs/create'
+              element={<SignsEditScreen />}
+              exact
+            />
+            <Route path='/admin/signs/:id' element={<SignsEditScreen />} />
           </Routes>
         </Container>
       </main>

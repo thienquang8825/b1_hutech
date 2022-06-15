@@ -4,7 +4,7 @@ import { UserAction } from './user.action'
 
 //syntax redux-thunk => allow to add a function within a fuction
 const getList =
-  (keyword = '', pageNumber = '', type) =>
+  (type, keyword = '', pageNumber = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: CONSTANT.GET_LIST_REQUEST })

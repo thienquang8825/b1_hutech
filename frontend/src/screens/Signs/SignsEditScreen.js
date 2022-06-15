@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import Sidebar from '../components/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Message from '../components/Message'
-import { QUESTION_CONSTANT } from '../constants/question.constant'
+import { QuestionAction } from '../../actions/question.action'
+import Sidebar from '../../components/Sidebar'
+import Message from '../../components/Message'
+import { QUESTION_CONSTANT } from '../../constants/question.constant'
+import axios from 'axios'
+import Loading from '../../components/Loading/Loading'
 
-const GrammarEditScreen = () => {
+const SignsEditScreen = () => {
   const { id: questionId } = useParams()
 
-  const type = 'grammar'
+  const type = 'signs'
 
-  const [question, setQuestion] = useState('')
+  const [images, setImages] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  // const [question, setQuestion] = useState('')
   const [answerA, setAnswerA] = useState({})
   const [answerB, setAnswerB] = useState({})
   const [answerC, setAnswerC] = useState({})
@@ -55,7 +60,7 @@ const GrammarEditScreen = () => {
         if (!questionDetail || questionDetail._id !== questionId) {
           dispatch(QuestionAction.getDetail(questionId, type))
         } else {
-          setQuestion(questionDetail.question)
+          setImages(questionDetail.question)
           setAnswerA(questionDetail.answers[0])
           setAnswerB(questionDetail.answers[1])
           setAnswerC(questionDetail.answers[2])
@@ -72,6 +77,45 @@ const GrammarEditScreen = () => {
     successCreate,
   ])
 
+  const styleUpload = {
+    display: images ? 'block' : 'none',
+  }
+
+  const handleUpload = async (e) => {
+    e.preventDefault()
+    try {
+      const file = e.target.files[0]
+      if (!file) {
+        return alert('File not exist')
+      }
+      if (file.size > 1024 * 1024) {
+        return alert('Size too large')
+      }
+      if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+        return alert('File format is incorrect')
+      }
+      let formData = new FormData()
+      formData.append('file', file)
+      setLoading(true)
+      const res = await axios.post('/api/upload', formData)
+      setLoading(false)
+      setImages(res.data)
+    } catch (error) {
+      alert(error.response.data.msg)
+    }
+  }
+
+  const handleDestroy = async () => {
+    try {
+      setLoading(true)
+      await axios.post('/api/upload/destroy', { public_id: images.public_id })
+      setLoading(false)
+      setImages(false)
+    } catch (error) {
+      alert(error.response.data.msg)
+    }
+  }
+
   const clearCorrect = () => {
     setAnswerA({ ...answerA, isCorrect: false })
     setAnswerB({ ...answerB, isCorrect: false })
@@ -84,24 +128,18 @@ const GrammarEditScreen = () => {
 
     if (questionId !== undefined) {
       dispatch(
-        QuestionAction.updateQuestion(
-          {
-            _id: questionId,
-            question,
-            answers: [answerA, answerB, answerC, answerD],
-          },
-          type
-        )
+        QuestionAction.updateQuestion(type, {
+          _id: questionId,
+          question: images,
+          answers: [answerA, answerB, answerC, answerD],
+        })
       )
     } else {
       dispatch(
-        QuestionAction.createQuestion(
-          {
-            question,
-            answers: [answerA, answerB, answerC, answerD],
-          },
-          type
-        )
+        QuestionAction.createQuestion(type, {
+          question: images,
+          answers: [answerA, answerB, answerC, answerD],
+        })
       )
     }
   }
@@ -119,7 +157,7 @@ const GrammarEditScreen = () => {
             <Message variant='danger'>{errorGetDetail}</Message>
           ) : (
             <form onSubmit={submitHandler}>
-              <div className='form-group my-3'>
+              {/* <div className='form-group my-3'>
                 <input
                   className='form-control bg-secondary'
                   type='text'
@@ -128,6 +166,26 @@ const GrammarEditScreen = () => {
                   onChange={(e) => setQuestion(e.target.value)}
                   required
                 />
+              </div> */}
+              <div className='create_product text-center'>
+                <div className='upload'>
+                  <input
+                    type='file'
+                    name='file'
+                    id='file_up'
+                    onChange={handleUpload}
+                  ></input>
+                  {loading ? (
+                    <div id='file_img'>
+                      <Loading></Loading>
+                    </div>
+                  ) : (
+                    <div id='file_img' style={styleUpload}>
+                      <img src={images ? images.url : ''} alt=''></img>
+                      <span onClick={handleDestroy}>Delete</span>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className='form-group my-3'>
                 <div className='row'>
@@ -259,4 +317,4 @@ const GrammarEditScreen = () => {
   )
 }
 
-export default GrammarEditScreen
+export default SignsEditScreen
