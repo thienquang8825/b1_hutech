@@ -14,10 +14,10 @@ const transformSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    suffix: {
-      type: String,
-      required: true,
-    },
+    // suffix: {
+    //   type: String,
+    //   required: true,
+    // },
   },
   {
     timestamps: true,

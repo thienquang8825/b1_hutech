@@ -23,6 +23,7 @@ const GrammarScreen = () => {
   let count = pageSize * (page - 1)
 
   useEffect(() => {
+    console.log('aaa')
     dispatch(QuestionAction.getList(type, '', pageNumber))
   }, [dispatch, pageNumber])
 

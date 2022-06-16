@@ -11,6 +11,7 @@ import readingRoutes from './routes/reading.route.js'
 import clozetextRoutes from './routes/clozetext.route.js'
 import uploadRoutes from './routes/upload.route.js'
 import signsRoutes from './routes/signs.route.js'
+import tranformRoutes from './routes/transform.route.js'
 
 import fileUpload from 'express-fileupload'
 
@@ -37,6 +38,7 @@ app.use('/api/grammar', grammarRoutes)
 app.use('/api/reading', readingRoutes)
 app.use('/api/clozetext', clozetextRoutes)
 app.use('/api/signs', signsRoutes)
+app.use('/api/transform', tranformRoutes)
 
 app.use(
   fileUpload({

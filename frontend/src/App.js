@@ -20,6 +20,9 @@ import ClozetextQuizScreen from './screens/Clozetext/ClozetextQuizScreen'
 import SignsScreen from './screens/Signs/SignsScreen'
 import SignsListScreen from './screens/Signs/SignsListScreen'
 import SignsEditScreen from './screens/Signs/SignsEditScreen'
+import TransformScreen from './screens/Transform/TransformScreen'
+import TransformListScreen from './screens/Transform/TransformListScreen'
+import TransformEditScreen from './screens/Transform/TransformEditScreen'
 
 const App = () => {
   return (
@@ -147,6 +150,39 @@ const App = () => {
               exact
             />
             <Route path='/admin/signs/:id' element={<SignsEditScreen />} />
+
+            {/* Transform */}
+            <Route path='/transform' element={<TransformScreen />} exact />
+            <Route
+              path='/transform/page/:pageNumber'
+              element={<TransformScreen />}
+            />
+            <Route
+              path='/admin/transform'
+              element={<TransformListScreen />}
+              exact
+            />
+            <Route
+              path='/admin/transform/page/:pageNumber'
+              element={<TransformListScreen />}
+            />
+            <Route
+              path='/admin/transform/search/:keyword'
+              element={<TransformListScreen />}
+            />
+            <Route
+              path='/admin/transform/search/:keyword/page/:pageNumber'
+              element={<TransformListScreen />}
+            />
+            <Route
+              path='/admin/transform/create'
+              element={<TransformEditScreen />}
+              exact
+            />
+            <Route
+              path='/admin/transform/:id'
+              element={<TransformEditScreen />}
+            />
           </Routes>
         </Container>
       </main>
