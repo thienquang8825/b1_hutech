@@ -49,12 +49,13 @@ const getSignsById = asyncHandler(async (req, res) => {
 // @route   PUT /api/signs/:id
 // @access  Private/Admin
 const updateSigns = asyncHandler(async (req, res) => {
-  const { question, answers } = req.body
+  const { question, public_id, answers } = req.body
 
   const existQuestion = await Signs.findById(req.params.id)
 
   if (existQuestion) {
     existQuestion.question = question
+    existQuestion.public_id = public_id
     existQuestion.answers = answers
 
     const updatedQuestion = await existQuestion.save()
@@ -69,10 +70,11 @@ const updateSigns = asyncHandler(async (req, res) => {
 // @route   POST /api/signs
 // @access  Private/Admin
 const createSigns = asyncHandler(async (req, res) => {
-  const { question, answers } = req.body
+  const { question, public_id, answers } = req.body
 
   const newQuestion = new Signs({
     question,
+    public_id,
     answers,
   })
 

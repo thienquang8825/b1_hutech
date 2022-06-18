@@ -60,7 +60,10 @@ const SignsEditScreen = () => {
         if (!questionDetail || questionDetail._id !== questionId) {
           dispatch(QuestionAction.getDetail(questionId, type))
         } else {
-          setImages(questionDetail.question)
+          setImages({
+            url: questionDetail.question,
+            public_id: questionDetail.public_id,
+          })
           setAnswerA(questionDetail.answers[0])
           setAnswerB(questionDetail.answers[1])
           setAnswerC(questionDetail.answers[2])
@@ -99,7 +102,7 @@ const SignsEditScreen = () => {
       setLoading(true)
       const res = await axios.post('/api/upload', formData)
       setLoading(false)
-      setImages(res.data)
+      setImages(res.data) //{url: ..., public_id: ...}
     } catch (error) {
       alert(error.response.data.msg)
     }
@@ -130,14 +133,16 @@ const SignsEditScreen = () => {
       dispatch(
         QuestionAction.updateQuestion(type, {
           _id: questionId,
-          question: images,
+          question: images.url,
+          public_id: images.public_id,
           answers: [answerA, answerB, answerC, answerD],
         })
       )
     } else {
       dispatch(
         QuestionAction.createQuestion(type, {
-          question: images,
+          question: images.url,
+          public_id: images.public_id,
           answers: [answerA, answerB, answerC, answerD],
         })
       )
@@ -157,16 +162,6 @@ const SignsEditScreen = () => {
             <Message variant='danger'>{errorGetDetail}</Message>
           ) : (
             <form onSubmit={submitHandler}>
-              {/* <div className='form-group my-3'>
-                <input
-                  className='form-control bg-secondary'
-                  type='text'
-                  placeholder='Enter question...'
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  required
-                />
-              </div> */}
               <div className='create_product text-center'>
                 <div className='upload'>
                   <input

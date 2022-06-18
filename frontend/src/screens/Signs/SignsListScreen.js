@@ -78,8 +78,8 @@ const SignsListScreen = () => {
                     <td className='align-middle'>{++count}</td>
                     <td className='align-middle'>
                       <img
-                        src={question.question && question.question.url}
-                        alt={question.question && question.question.url}
+                        src={question.question && question.question}
+                        alt={question.question && question.question}
                         style={{ width: '25%' }}
                       />
                     </td>

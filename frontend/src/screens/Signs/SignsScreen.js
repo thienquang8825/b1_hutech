@@ -53,7 +53,8 @@ const SignsScreen = () => {
             {questions.map((question) => (
               <Quiz
                 key={question._id}
-                question={{ ...question, question: question.question.url }}
+                // question={{ ...question, question: question.question.url }}
+                question={question}
                 show={show}
                 number={(++count).toString()}
                 type={type}

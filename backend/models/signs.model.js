@@ -2,10 +2,8 @@ import mongoose from 'mongoose'
 
 const signsSchema = mongoose.Schema(
   {
-    question: {
-      type: Object,
-      required: true,
-    },
+    question: { type: String, required: true },
+    public_id: { type: String, required: true },
     answers: [
       {
         answer: { type: String, required: true },
