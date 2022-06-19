@@ -84,24 +84,18 @@ const GrammarEditScreen = () => {
 
     if (questionId !== undefined) {
       dispatch(
-        QuestionAction.updateQuestion(
-          {
-            _id: questionId,
-            question,
-            answers: [answerA, answerB, answerC, answerD],
-          },
-          type
-        )
+        QuestionAction.updateQuestion(type, {
+          _id: questionId,
+          question,
+          answers: [answerA, answerB, answerC, answerD],
+        })
       )
     } else {
       dispatch(
-        QuestionAction.createQuestion(
-          {
-            question,
-            answers: [answerA, answerB, answerC, answerD],
-          },
-          type
-        )
+        QuestionAction.createQuestion(type, {
+          question,
+          answers: [answerA, answerB, answerC, answerD],
+        })
       )
     }
   }

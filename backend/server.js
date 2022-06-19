@@ -13,8 +13,6 @@ import uploadRoutes from './routes/upload.route.js'
 import signsRoutes from './routes/signs.route.js'
 import tranformRoutes from './routes/transform.route.js'
 
-import fileUpload from 'express-fileupload'
-
 dotenv.config()
 
 connectDB()
@@ -40,11 +38,6 @@ app.use('/api/clozetext', clozetextRoutes)
 app.use('/api/signs', signsRoutes)
 app.use('/api/transform', tranformRoutes)
 
-app.use(
-  fileUpload({
-    useTempFiles: true,
-  })
-)
 app.use('/api/upload', uploadRoutes)
 
 app.use(ErrorMiddleware.notFoundUrl)
