@@ -61,7 +61,7 @@ const TransformScreen = () => {
 
   return (
     <>
-      <h1 className='text-center m-3'>Vocabulary & Grammar</h1>
+      <h1 className='text-center m-3'>Sentence Transformation</h1>
       <div className='row mt-3'>
         <div className='col-md-3 border'>
           <Aside

@@ -24,6 +24,8 @@ import TransformScreen from './screens/Transform/TransformScreen'
 import TransformListScreen from './screens/Transform/TransformListScreen'
 import TransformEditScreen from './screens/Transform/TransformEditScreen'
 
+import SpeechToText from './screens/Speaking/SpeechToText'
+
 const App = () => {
   return (
     <Router>
@@ -183,6 +185,9 @@ const App = () => {
               path='/admin/transform/:id'
               element={<TransformEditScreen />}
             />
+
+            {/* DemoSpeak */}
+            <Route path='/speaking' element={<SpeechToText />} />
           </Routes>
         </Container>
       </main>

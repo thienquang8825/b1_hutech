@@ -52,8 +52,12 @@ const Header = () => {
                 Writing emails, letter, essays
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href='#listening'>Listening</Nav.Link>
-            <Nav.Link href='#speaking'>Speaking</Nav.Link>
+            <LinkContainer to='/listening'>
+              <Nav.Link> Listening</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/speaking'>
+              <Nav.Link> Speaking</Nav.Link>
+            </LinkContainer>
             <NavDropdown title='Mock Test' id='basic-nav-dropdown'>
               <NavDropdown.Item href='#action/3.1'>
                 Reading - Writing (90 minutes)
