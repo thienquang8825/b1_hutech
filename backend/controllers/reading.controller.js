@@ -29,7 +29,7 @@ const getReadingList = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-        paragrap: {
+        title: {
           $regex: req.query.keyword,
           $options: 'i', //don't care about case sensitive
         },

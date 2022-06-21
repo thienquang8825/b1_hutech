@@ -37,26 +37,50 @@ export default function DemoAudio() {
     }
   }
 
+  // return (
+  //   <div className='create_product'>
+  //     <div className='upload'>
+  //       <input
+  //         type='file'
+  //         name='file'
+  //         id='file_up'
+  //         onChange={handleUpload}
+  //       ></input>
+  //       {loading ? (
+  //         <div id='file_img'>
+  //           <Loading></Loading>
+  //         </div>
+  //       ) : (
+  //         <div id='file_img' style={styleUpload}>
+  //           <img src={images ? images.url : ''} alt=''></img>
+  //           <span onClick={handleDestroy}>Delete</span>
+
+  //           <audio controls className='w-100'>
+  //             <source src={images.url}></source>
+  //           </audio>
+  //         </div>
+  //       )}
+  //     </div>
+  //   </div>
+  // )
+
   return (
-    <div className='create_product'>
-      <div className='upload'>
-        <input
-          type='file'
-          name='file'
-          id='file_up'
-          onChange={handleUpload}
-        ></input>
-        {loading ? (
-          <div id='file_img'>
-            <Loading></Loading>
-          </div>
-        ) : (
-          <div id='file_img' style={styleUpload}>
-            <img src={images ? images.url : ''} alt=''></img>
-            <span onClick={handleDestroy}>Delete</span>
-          </div>
-        )}
-      </div>
+    <div style={{ width: '500px', height: '500px', border: '2px solid red' }}>
+      <input type='file' name='file' onChange={handleUpload}></input>
+      {loading ? (
+        <div>
+          <Loading></Loading>
+        </div>
+      ) : (
+        <div>
+          {/* <img src={images ? images.url : ''} alt=''></img>
+          <span onClick={handleDestroy}>Delete</span> */}
+
+          <audio controls className='w-100'>
+            <source src={images.url}></source>
+          </audio>
+        </div>
+      )}
     </div>
   )
 }

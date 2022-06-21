@@ -6,10 +6,10 @@ import { QUESTION_CONSTANT } from '../../constants/question.constant'
 import Message from '../../components/Message'
 import Sidebar from '../../components/Sidebar'
 
-const ReadingQuizScreen = () => {
-  const { clozetextId, questionId } = useParams()
+const ListeningQuizScreen = () => {
+  const { listeningId, questionId } = useParams()
 
-  const type = 'clozetext'
+  const type = 'listening'
 
   // const [question, setQuestion] = useState('')
   const [answerA, setAnswerA] = useState({})
@@ -43,10 +43,10 @@ const ReadingQuizScreen = () => {
     if (successUpdate) {
       dispatch({ type: QUESTION_CONSTANT.UPDATE_RESET })
       window.alert('Question updated')
-      navigate(`/admin/${type}/${clozetextId}`)
+      navigate(`/admin/${type}/${listeningId}`)
     } else {
-      if (!questionDetail || questionDetail._id !== clozetextId) {
-        dispatch(QuestionAction.getDetail(clozetextId, type))
+      if (!questionDetail || questionDetail._id !== listeningId) {
+        dispatch(QuestionAction.getDetail(listeningId, type))
       }
 
       if (quiz) {
@@ -63,7 +63,7 @@ const ReadingQuizScreen = () => {
     questionDetail,
     questionId,
     quiz,
-    clozetextId,
+    listeningId,
     successUpdate,
   ])
 
@@ -241,4 +241,4 @@ const ReadingQuizScreen = () => {
   )
 }
 
-export default ReadingQuizScreen
+export default ListeningQuizScreen

@@ -26,6 +26,10 @@ import TransformEditScreen from './screens/Transform/TransformEditScreen'
 
 import SpeechToText from './screens/Speaking/SpeechToText'
 import DemoAudio from './screens/DemoAudio'
+import ListeningListScreen from './screens/Listening/ListeningListScreen'
+import ListeningEditScreen from './screens/Listening/ListeningEditScreen'
+import ListeningQuizScreen from './screens/Listening/ListeningQuizScreen'
+import ListeningScreen from './screens/Listening/ListeningScreen'
 
 const App = () => {
   return (
@@ -185,6 +189,43 @@ const App = () => {
             <Route
               path='/admin/transform/:id'
               element={<TransformEditScreen />}
+            />
+
+            {/* Listening */}
+            <Route path='/listening' element={<ListeningScreen />} />
+            <Route
+              path='/listening/page/:pageNumber'
+              element={<ListeningScreen />}
+            />
+            <Route
+              path='/admin/listening'
+              element={<ListeningListScreen />}
+              exact
+            />
+            <Route
+              path='/admin/listening/page/:pageNumber'
+              element={<ListeningListScreen />}
+            />
+            <Route
+              path='/admin/listening/create'
+              element={<ListeningEditScreen />}
+              exact
+            />
+            <Route
+              path='/admin/listening/:id'
+              element={<ListeningEditScreen />}
+            />
+            <Route
+              path='/admin/listening/:listeningId/question/:questionId'
+              element={<ListeningQuizScreen />}
+            />
+            <Route
+              path='/admin/listening/search/:keyword'
+              element={<ListeningListScreen />}
+            />
+            <Route
+              path='/admin/listening/search/:keyword/page/:pageNumber'
+              element={<ListeningListScreen />}
             />
 
             {/* DemoSpeak */}

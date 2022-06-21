@@ -29,14 +29,14 @@ const getClozetextList = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-        paragrap: {
+        title: {
           $regex: req.query.keyword,
           $options: 'i', //don't care about case sensitive
         },
       }
     : {}
 
-  const count = await Clozetext.count({ ...keyword }) //({ ...paragrap }) ~ ({ paragrap: ... })
+  const count = await Clozetext.count({ ...keyword }) //({ ...title }) ~ ({ title: ... })
 
   const questions = await Clozetext.find({ ...keyword })
     .limit(pageSize)

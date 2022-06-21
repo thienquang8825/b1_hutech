@@ -12,6 +12,7 @@ import clozetextRoutes from './routes/clozetext.route.js'
 import uploadRoutes from './routes/upload.route.js'
 import signsRoutes from './routes/signs.route.js'
 import tranformRoutes from './routes/transform.route.js'
+import listeningRoutes from './routes/listening.route.js'
 
 dotenv.config()
 
@@ -37,6 +38,7 @@ app.use('/api/reading', readingRoutes)
 app.use('/api/clozetext', clozetextRoutes)
 app.use('/api/signs', signsRoutes)
 app.use('/api/transform', tranformRoutes)
+app.use('/api/listening', listeningRoutes)
 
 app.use('/api/upload', uploadRoutes)
 

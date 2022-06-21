@@ -27,7 +27,9 @@ const Sidebar = () => {
           Writing emails, letter, essays
         </NavDropdown.Item>
       </NavDropdown>
-      <Nav.Link href='#listening'>Listening</Nav.Link>
+      <LinkContainer to='/admin/listening'>
+        <Nav.Link>Listening</Nav.Link>
+      </LinkContainer>
       <Nav.Link href='#speaking'>Speaking</Nav.Link>
       <NavDropdown title='Mock Test' id='basic-nav-dropdown'>
         <NavDropdown.Item href='#action/3.1'>
