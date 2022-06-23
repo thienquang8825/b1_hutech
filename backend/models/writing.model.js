@@ -2,14 +2,8 @@ import mongoose from 'mongoose'
 
 const writingSchema = mongoose.Schema(
   {
-    topic: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
+    topic: { type: String, required: true },
+    description: { type: String, required: true },
   },
   {
     timestamps: true,

@@ -24,12 +24,17 @@ import TransformScreen from './screens/Transform/TransformScreen'
 import TransformListScreen from './screens/Transform/TransformListScreen'
 import TransformEditScreen from './screens/Transform/TransformEditScreen'
 
-import SpeechToText from './screens/Speaking/SpeechToText'
-import DemoAudio from './screens/DemoAudio'
+import SpeechToTextScreen from './screens/Speaking/SpeechToTextScreen'
 import ListeningListScreen from './screens/Listening/ListeningListScreen'
 import ListeningEditScreen from './screens/Listening/ListeningEditScreen'
 import ListeningQuizScreen from './screens/Listening/ListeningQuizScreen'
 import ListeningScreen from './screens/Listening/ListeningScreen'
+import SpeakingListScreen from './screens/Speaking/SpeakingListScreen'
+import SpeakingEditScreen from './screens/Speaking/SpeakingEditScreen'
+import SpeakingScreen from './screens/Speaking/SpeakingScreen'
+import WritingScreen from './screens/Writing/WritingScreen'
+import WritingListScreen from './screens/Writing/WritingListScreen'
+import WritingEditScreen from './screens/Writing/WritingEditScreen'
 
 const App = () => {
   return (
@@ -228,11 +233,75 @@ const App = () => {
               element={<ListeningListScreen />}
             />
 
-            {/* DemoSpeak */}
-            <Route path='/speaking' element={<SpeechToText />} />
+            {/* Speaking */}
+            <Route path='/speaking' element={<SpeakingScreen />} />
+            <Route
+              path='/speaking/page/:pageNumber'
+              element={<SpeakingScreen />}
+            />
+            <Route
+              path='/admin/speaking'
+              element={<SpeakingListScreen />}
+              exact
+            />
+            <Route
+              path='/admin/speaking/page/:pageNumber'
+              element={<SpeakingListScreen />}
+            />
+            <Route
+              path='/admin/speaking/create'
+              element={<SpeakingEditScreen />}
+              exact
+            />
+            <Route
+              path='/admin/speaking/:id'
+              element={<SpeakingEditScreen />}
+            />
+            <Route
+              path='/admin/speaking/search/:keyword'
+              element={<SpeakingListScreen />}
+            />
+            <Route
+              path='/admin/speaking/search/:keyword/page/:pageNumber'
+              element={<SpeakingListScreen />}
+            />
+            <Route
+              path='/speaking/speechtotext'
+              element={<SpeechToTextScreen />}
+            />
 
-            {/* Demo Audio */}
-            <Route path='/demo' element={<DemoAudio />} />
+            {/* Writing */}
+            <Route path='/writing' element={<WritingScreen />} />
+            <Route
+              path='/writing/page/:pageNumber'
+              element={<WritingScreen />}
+            />
+            <Route
+              path='/admin/writing'
+              element={<WritingListScreen />}
+              exact
+            />
+            <Route
+              path='/admin/writing/page/:pageNumber'
+              element={<WritingListScreen />}
+            />
+            <Route
+              path='/admin/writing/create'
+              element={<WritingEditScreen />}
+              exact
+            />
+            <Route path='/admin/writing/:id' element={<WritingEditScreen />} />
+            <Route
+              path='/admin/writing/search/:keyword'
+              element={<WritingListScreen />}
+            />
+            <Route
+              path='/admin/writing/search/:keyword/page/:pageNumber'
+              element={<WritingListScreen />}
+            />
+
+            {/* DemoSpeak */}
+            {/* <Route path='/speaking' element={<SpeechToText />} /> */}
           </Routes>
         </Container>
       </main>

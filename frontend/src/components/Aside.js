@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Aside = ({
   show,
@@ -11,28 +11,49 @@ const Aside = ({
   pageSize,
   type,
 }) => {
+  const navigate = useNavigate()
+
   return (
     <div className='row justify-content-evenly'>
-      <h5 className='mt-3 text-center'>Function</h5>
-      <button
-        className='btn btn-primary col-sm-5 my-2'
-        type='button'
-        onClick={() => {
-          setClear(true)
-          setShow(!show)
-        }}
-      >
-        {show ? 'Hidden' : 'Show'}
-      </button>
-      <button
-        className='btn btn-primary col-sm-5 my-2'
-        type='button'
-        disabled={show}
-        onClick={() => setClear(true)}
-      >
-        Clear
-      </button>
-      <hr></hr>
+      {type !== 'writing' && (
+        <>
+          <h5 className='mt-3 text-center'>Function</h5>
+          {type !== 'speaking' && (
+            <>
+              <button
+                className='btn btn-primary col-sm-5 my-2'
+                type='button'
+                onClick={() => {
+                  setClear(true)
+                  setShow(!show)
+                }}
+              >
+                {show ? 'Hidden' : 'Show'}
+              </button>
+              <button
+                className='btn btn-primary col-sm-5 my-2'
+                type='button'
+                disabled={show}
+                onClick={() => setClear(true)}
+              >
+                Clear
+              </button>
+            </>
+          )}
+          {type === 'speaking' && (
+            <button
+              className='btn btn-primary col-sm-5 my-2'
+              type='button'
+              onClick={() => navigate('/speaking/speechtotext')}
+            >
+              Speech To Text
+            </button>
+          )}
+          <hr></hr>
+        </>
+      )}
+
+      {/* --------------------- */}
       <h5 className='text-center'>List</h5>
 
       {[...Array(pages).keys()].map((x) => (
@@ -47,7 +68,11 @@ const Aside = ({
             }`}
             type='button'
           >
-            {type === 'grammar' || type === 'signs' || type === 'transform' ? (
+            {type === 'grammar' ||
+            type === 'signs' ||
+            type === 'transform' ||
+            type === 'speaking' ||
+            type === 'writing' ? (
               <>
                 {x * pageSize + 1} -{' '}
                 {(x + 1) * pageSize > quantity ? quantity : (x + 1) * pageSize}

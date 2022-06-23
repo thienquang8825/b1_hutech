@@ -60,9 +60,10 @@ const ReadingScreen = () => {
                   question={question}
                   show={show}
                   number={(++count).toString()}
+                  type={type}
                 />
               ))}
-            <Navigate page={page} pages={pages} type='reading' />
+            <Navigate page={page} pages={pages} type={type} />
           </div>
         )}
       </div>

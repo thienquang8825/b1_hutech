@@ -68,6 +68,7 @@ const ListeningScreen = () => {
                   question={question}
                   show={show}
                   number={(++count).toString()}
+                  type={type}
                 />
               ))}
             <Navigate page={page} pages={pages} type={type} />

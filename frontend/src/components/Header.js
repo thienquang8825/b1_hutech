@@ -43,14 +43,13 @@ const Header = () => {
             </NavDropdown>
             <NavDropdown title='Writing' id='basic-nav-dropdown'>
               <LinkContainer to='/transform'>
-                <NavDropdown.Item> Sentence Transformation</NavDropdown.Item>
+                <NavDropdown.Item>Sentence Transformation</NavDropdown.Item>
               </LinkContainer>
-              {/* <NavDropdown.Item href='#action/3.1'>
-                Sentence Transformation
-              </NavDropdown.Item> */}
-              <NavDropdown.Item href='#action/3.3'>
-                Writing emails, letter, essays
-              </NavDropdown.Item>
+              <LinkContainer to='/writing'>
+                <NavDropdown.Item>
+                  Writing emails, letter, essays
+                </NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
             <LinkContainer to='/listening'>
               <Nav.Link> Listening</Nav.Link>

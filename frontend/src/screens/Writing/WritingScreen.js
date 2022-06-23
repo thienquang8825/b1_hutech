@@ -2,27 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { QuestionAction } from '../../actions/question.action'
-import Quiz from '../../components/Quiz'
 import Navigate from '../../components/Navigate'
 import Aside from '../../components/Aside'
 
-const ClozetextScreen = () => {
+const WritingScreen = () => {
   const { pageNumber } = useParams()
 
-  const type = 'clozetext'
+  const type = 'writing'
 
   const [clear, setClear] = useState(false)
   const [show, setShow] = useState(false)
 
   const dispatch = useDispatch()
 
-  const questionGetOne = useSelector((state) => state.questionGetOne)
-  const { question: clozetext, page, pages } = questionGetOne
+  const questionGetList = useSelector((state) => state.questionGetList)
+  const { questions, page, pages, quantity } = questionGetList
 
-  let count = 0
+  const pageSize = 10
 
   useEffect(() => {
-    dispatch(QuestionAction.getOne(type, pageNumber))
+    dispatch(QuestionAction.getList(type, '', pageNumber))
   }, [dispatch, pageNumber])
 
   useEffect(() => {
@@ -33,7 +32,7 @@ const ClozetextScreen = () => {
 
   return (
     <>
-      <h1 className='text-center m-3'>Cloze text</h1>
+      <h1 className='text-center m-3'>Speaking</h1>
       <div className='row mt-3'>
         <div className='col-md-3 border'>
           <Aside
@@ -42,28 +41,24 @@ const ClozetextScreen = () => {
             setShow={setShow}
             page={page}
             pages={pages}
+            quantity={quantity}
+            pageSize={pageSize}
             type={type}
           />
         </div>
         {clear === false && (
           <div className='col-md-9 border'>
-            <p>
-              <strong>
-                {clozetext.title}: {clozetext.require}
-              </strong>
-            </p>
-            <div dangerouslySetInnerHTML={{ __html: clozetext.paragrap }}></div>
-            {clozetext.questions &&
-              clozetext.questions.map((question) => (
-                <Quiz
-                  key={question._id}
-                  question={question}
-                  show={show}
-                  number={(++count).toString()}
-                  type={type}
-                />
-              ))}
-            <Navigate page={page} pages={pages} type='clozetext' />
+            {questions.map((question) => (
+              <React.Fragment key={question._id}>
+                <div>
+                  <strong>Topic {question.topic}:</strong>
+                </div>
+                <div
+                  dangerouslySetInnerHTML={{ __html: question.description }}
+                ></div>
+              </React.Fragment>
+            ))}
+            <Navigate page={page} pages={pages} type={type} />
           </div>
         )}
       </div>
@@ -71,4 +66,4 @@ const ClozetextScreen = () => {
   )
 }
 
-export default ClozetextScreen
+export default WritingScreen

@@ -29,8 +29,13 @@ const SearchBox = ({ type }) => {
             type='text'
             className='form-control'
             placeholder={
-              type === 'reading' || type === 'clozetext' || type === 'listening'
+              type === 'reading' ||
+              type === 'clozetext' ||
+              type === 'listening' ||
+              type === 'speaking'
                 ? 'Search by title...'
+                : type === 'writing'
+                ? 'Search by description...'
                 : 'Search by question...'
             }
             onChange={(e) => setKeyword(e.target.value)}

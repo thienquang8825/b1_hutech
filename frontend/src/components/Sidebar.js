@@ -21,16 +21,18 @@ const Sidebar = () => {
       </NavDropdown>
       <NavDropdown title='Writing' id='basic-nav-dropdown'>
         <LinkContainer to='/admin/transform'>
-          <NavDropdown.Item> Sentence Transformation</NavDropdown.Item>
+          <NavDropdown.Item>Sentence Transformation</NavDropdown.Item>
         </LinkContainer>
-        <NavDropdown.Item href='#action/3.3'>
-          Writing emails, letter, essays
-        </NavDropdown.Item>
+        <LinkContainer to='/admin/writing'>
+          <NavDropdown.Item>Writing emails, letter, essays</NavDropdown.Item>
+        </LinkContainer>
       </NavDropdown>
       <LinkContainer to='/admin/listening'>
         <Nav.Link>Listening</Nav.Link>
       </LinkContainer>
-      <Nav.Link href='#speaking'>Speaking</Nav.Link>
+      <LinkContainer to='/admin/speaking'>
+        <Nav.Link>Speaking</Nav.Link>
+      </LinkContainer>
       <NavDropdown title='Mock Test' id='basic-nav-dropdown'>
         <NavDropdown.Item href='#action/3.1'>
           Reading - Writing (90 minutes)
