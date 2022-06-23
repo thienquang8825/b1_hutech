@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Sidebar from '../components/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Message from '../components/Message'
-import { QUESTION_CONSTANT } from '../constants/question.constant'
+import { QuestionAction } from '../../actions/question.action'
+import { QUESTION_CONSTANT } from '../../constants/question.constant'
+import Message from '../../components/Message'
+import Sidebar from '../../components/Sidebar'
 
-const GrammarEditScreen = () => {
-  const { id: questionId } = useParams()
+const ReadingQuizScreen = () => {
+  const { readingId, questionId } = useParams()
 
-  const type = 'grammar'
+  const type = 'reading'
 
   const [question, setQuestion] = useState('')
   const [answerA, setAnswerA] = useState({})
@@ -27,6 +27,11 @@ const GrammarEditScreen = () => {
     error: errorGetDetail,
   } = questionGetDetail
 
+  let quiz
+  if (questionDetail.questions) {
+    quiz = questionDetail.questions.find((q) => q._id === questionId)
+  }
+
   const questionUpdate = useSelector((state) => state.questionUpdate)
   const {
     // loading: loadingUpdate,
@@ -34,33 +39,22 @@ const GrammarEditScreen = () => {
     success: successUpdate,
   } = questionUpdate
 
-  const questionCreate = useSelector((state) => state.questionCreate)
-  const {
-    // loading: loadingCreate,
-    error: errorCreate,
-    success: successCreate,
-  } = questionCreate
-
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: QUESTION_CONSTANT.UPDATE_RESET })
       window.alert('Question updated')
-      navigate(`/admin/${type}`)
-    } else if (successCreate) {
-      dispatch({ type: QUESTION_CONSTANT.CREATE_RESET })
-      window.alert('Question created')
-      navigate(`/admin/${type}`)
+      navigate(`/admin/${type}/${readingId}`)
     } else {
-      if (questionId !== undefined) {
-        if (!questionDetail || questionDetail._id !== questionId) {
-          dispatch(QuestionAction.getDetail(questionId, type))
-        } else {
-          setQuestion(questionDetail.question)
-          setAnswerA(questionDetail.answers[0])
-          setAnswerB(questionDetail.answers[1])
-          setAnswerC(questionDetail.answers[2])
-          setAnswerD(questionDetail.answers[3])
-        }
+      if (!questionDetail || questionDetail._id !== readingId) {
+        dispatch(QuestionAction.getDetail(readingId, type))
+      }
+
+      if (quiz) {
+        setQuestion(quiz.question)
+        setAnswerA(quiz.answers[0])
+        setAnswerB(quiz.answers[1])
+        setAnswerC(quiz.answers[2])
+        setAnswerD(quiz.answers[3])
       }
     }
   }, [
@@ -68,8 +62,9 @@ const GrammarEditScreen = () => {
     navigate,
     questionDetail,
     questionId,
+    quiz,
+    readingId,
     successUpdate,
-    successCreate,
   ])
 
   const clearCorrect = () => {
@@ -79,27 +74,32 @@ const GrammarEditScreen = () => {
     setAnswerD({ ...answerD, isCorrect: false })
   }
 
+  const changeQuestions = () => {
+    return questionDetail.questions.map((x) =>
+      x._id === questionId
+        ? { ...x, question, answers: [answerA, answerB, answerC, answerD] }
+        : x
+    )
+  }
+
   const submitHandler = (e) => {
     e.preventDefault()
 
-    if (questionId !== undefined) {
-      dispatch(
-        QuestionAction.updateQuestion(type, {
-          _id: questionId,
-          question,
-          answers: [answerA, answerB, answerC, answerD],
-        })
-      )
+    if (questionId === 'create') {
+      questionDetail.questions.push({
+        question,
+        answers: [answerA, answerB, answerC, answerD],
+      })
+      dispatch(QuestionAction.updateQuestion(type, { ...questionDetail }))
     } else {
       dispatch(
-        QuestionAction.createQuestion(type, {
-          question,
-          answers: [answerA, answerB, answerC, answerD],
+        QuestionAction.updateQuestion(type, {
+          ...questionDetail,
+          questions: changeQuestions(),
         })
       )
     }
   }
-
   return (
     <>
       <div className='row mt-3'>
@@ -108,7 +108,6 @@ const GrammarEditScreen = () => {
         </div>
         <div className='col-md-9 border'>
           {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-          {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
           {errorGetDetail ? (
             <Message variant='danger'>{errorGetDetail}</Message>
           ) : (
@@ -242,7 +241,7 @@ const GrammarEditScreen = () => {
               </div>
               <div className='form-group my-3 text-center'>
                 <button type='submit' className='btn btn-primary py-2 px-4'>
-                  {questionId !== undefined ? 'Update' : 'Create'}
+                  {questionId !== 'create' ? 'Update' : 'Create'}
                 </button>
               </div>
             </form>
@@ -253,4 +252,4 @@ const GrammarEditScreen = () => {
   )
 }
 
-export default GrammarEditScreen
+export default ReadingQuizScreen

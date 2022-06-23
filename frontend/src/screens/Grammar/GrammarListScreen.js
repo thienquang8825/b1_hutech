@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../../components/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Paginate from '../components/Paginate'
-import SearchBox from '../components/SearchBox'
+import { QuestionAction } from '../../actions/question.action'
+import Paginate from '../../components/Paginate'
+import SearchBox from '../../components/SearchBox'
 
 const GrammarListScreen = () => {
   const { keyword, pageNumber } = useParams()

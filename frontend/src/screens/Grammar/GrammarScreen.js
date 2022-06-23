@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { QuestionAction } from '../actions/question.action'
-import Quiz from '../components/Quiz'
-import Navigate from '../components/Navigate'
-import Aside from '../components/Aside'
+import { QuestionAction } from '../../actions/question.action'
+import Quiz from '../../components/Quiz'
+import Navigate from '../../components/Navigate'
+import Aside from '../../components/Aside'
 
 const GrammarScreen = () => {
   const { pageNumber } = useParams()
