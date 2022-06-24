@@ -34,7 +34,7 @@ const TransformScreen = () => {
   const checkTransform = (idInput, answer) => {
     const element = document.getElementById(idInput)
 
-    if (element.value === answer) {
+    if (element.value.trim() === answer) {
       element.style.color = '#73a839'
     } else {
       element.style.color = 'red'

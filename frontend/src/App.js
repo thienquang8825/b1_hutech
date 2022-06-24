@@ -35,6 +35,7 @@ import SpeakingScreen from './screens/Speaking/SpeakingScreen'
 import WritingScreen from './screens/Writing/WritingScreen'
 import WritingListScreen from './screens/Writing/WritingListScreen'
 import WritingEditScreen from './screens/Writing/WritingEditScreen'
+import Part1Screen from './screens/Part1/Part1Screen'
 
 const App = () => {
   return (
@@ -300,8 +301,8 @@ const App = () => {
               element={<WritingListScreen />}
             />
 
-            {/* DemoSpeak */}
-            {/* <Route path='/speaking' element={<SpeechToText />} /> */}
+            {/* PART 1 */}
+            <Route path='/part1/:id' element={<Part1Screen />} />
           </Routes>
         </Container>
       </main>

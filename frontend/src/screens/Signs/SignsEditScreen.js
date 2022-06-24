@@ -100,7 +100,7 @@ const SignsEditScreen = () => {
       let formData = new FormData()
       formData.append('file', file)
       setLoading(true)
-      const res = await axios.post('/api/upload', formData)
+      const res = await axios.post('/api/upload/image', formData)
       setLoading(false)
       setImages(res.data) //{url: ..., public_id: ...}
     } catch (error) {
@@ -111,7 +111,9 @@ const SignsEditScreen = () => {
   const handleDestroy = async () => {
     try {
       setLoading(true)
-      await axios.post('/api/upload/destroy', { public_id: images.public_id })
+      await axios.post('/api/upload/image/destroy', {
+        public_id: images.public_id,
+      })
       setLoading(false)
       setImages(false)
     } catch (error) {

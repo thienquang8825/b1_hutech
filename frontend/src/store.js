@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { QuestionReducer } from './reducers/question.reducer'
 import { UserReducer } from './reducers/user.reducer'
+import { Part1Reducer } from './reducers/part1.reducer'
 
 const reducer = combineReducers({
   questionGetList: QuestionReducer.getList,
@@ -15,6 +16,9 @@ const reducer = combineReducers({
 
   userLogin: UserReducer.login,
   userRegister: UserReducer.register,
+
+  part1GetList: Part1Reducer.getList,
+  part1CalculateScore: Part1Reducer.calculateScore,
 })
 
 const userLoginFromStorage = localStorage.getItem('userLogin')

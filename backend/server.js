@@ -16,6 +16,8 @@ import listeningRoutes from './routes/listening.route.js'
 import speakingRoutes from './routes/speaking.route.js'
 import writingRoutes from './routes/writing.route.js'
 
+import part1Routes from './routes/part1.route.js'
+
 dotenv.config()
 
 connectDB()
@@ -45,6 +47,8 @@ app.use('/api/speaking', speakingRoutes)
 app.use('/api/writing', writingRoutes)
 
 app.use('/api/upload', uploadRoutes)
+
+app.use('/api/part1', part1Routes)
 
 app.use(ErrorMiddleware.notFoundUrl)
 

@@ -2,18 +2,9 @@ import mongoose from 'mongoose'
 
 const transformSchema = mongoose.Schema(
   {
-    question: {
-      type: String,
-      required: true,
-    },
-    prefix: {
-      type: String,
-      required: true,
-    },
-    answer: {
-      type: String,
-      required: true,
-    },
+    question: { type: String, required: true },
+    prefix: { type: String, required: true },
+    answer: { type: String, required: true },
     // suffix: {
     //   type: String,
     //   required: true,

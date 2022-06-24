@@ -2,18 +2,9 @@ import mongoose from 'mongoose'
 
 const readingSchema = mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    require: {
-      type: String,
-      required: true,
-    },
-    paragrap: {
-      type: String,
-      required: true,
-    },
+    title: { type: String, required: true },
+    require: { type: String, required: true },
+    paragrap: { type: String, required: true },
     questions: [
       {
         question: {
